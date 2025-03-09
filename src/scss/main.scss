@@ -1,0 +1,479 @@
+// 变量定义
+$rock-gray: #4a4a4a;
+$safety-orange: #ff6b35;
+$rope-white: #f7f7f7;
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+
+// 全局重置
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// 基础样式
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  line-height: 1.6;
+  color: $rock-gray;
+  background-color: $rope-white;
+}
+
+h1, h2, h3 {
+  font-family: 'Rock Salt', cursive;
+  margin-bottom: 1rem;
+}
+
+// 导航栏样式
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: $rock-gray;
+  padding: 1rem 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    color: $rope-white;
+    font-size: 1.5rem;
+    
+    i {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+
+    a {
+      color: $rope-white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover, &.active {
+        color: $safety-orange;
+      }
+    }
+  }
+
+  .mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+
+    span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: $rope-white;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+  }
+}
+
+// 英雄区域样式
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('../assets/images/hero-bg.svg');
+  background-size: cover;
+  background-position: center;
+  color: $rope-white;
+
+  .hero-content {
+    max-width: 1200px;
+    padding: 2rem;
+
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+    }
+  }
+
+  .intro-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+
+    .card {
+      background: rgba($rock-gray, 0.8);
+      padding: 2rem;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      i {
+        font-size: 2.5rem;
+        color: $safety-orange;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: $breakpoint-mobile) {
+  .main-nav {
+    .nav-links {
+      display: none;
+      
+      &.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: $rock-gray;
+        padding: 1rem 0;
+      }
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+  }
+
+  .hero {
+    .intro-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// 分隔线样式（登山绳效果）
+.section-divider {
+  height: 3px;
+  background: repeating-linear-gradient(
+    45deg,
+    $safety-orange,
+    $safety-orange 10px,
+    $rock-gray 10px,
+    $rock-gray 20px
+  );
+  margin: 3rem 0;
+}
+
+// 课程模块样式
+.courses {
+  padding: 4rem 2rem;
+  background-color: $rope-white;
+
+  h2 {
+    text-align: center;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $rock-gray;
+    margin-bottom: 3rem;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .course-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    .course-image {
+      height: 200px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    h3 {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $rock-gray;
+      padding: 1.5rem 1.5rem 0.5rem;
+      margin: 0;
+    }
+
+    .progress-bar {
+      margin: 1rem 1.5rem;
+      height: 6px;
+      background: #eee;
+      border-radius: 3px;
+      overflow: hidden;
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, $safety-orange, lighten($safety-orange, 10%));
+        border-radius: 3px;
+        transition: width 0.3s ease;
+      }
+    }
+
+    .learn-btn {
+      display: block;
+      margin: 1rem 1.5rem 1.5rem;
+      padding: 0.8rem 1.5rem;
+      background: $safety-orange;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background: darken($safety-orange, 10%);
+      }
+    }
+
+    .description {
+      padding: 0 1.5rem;
+      color: lighten($rock-gray, 20%);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+// 线路演示模块样式
+.routes {
+  padding: 4rem 2rem;
+  background-color: white;
+
+  .filter-container {
+    max-width: 1200px;
+    margin: 0 auto 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background: $rope-white;
+    border-radius: 10px;
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &.color-filter {
+        .filter-options {
+          max-width: 800px;
+        }
+      }
+
+      label {
+        font-weight: 500;
+        color: $rock-gray;
+        min-width: 60px;
+      }
+
+      .filter-options {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+
+        button {
+          padding: 0.5rem 1rem;
+          border: 1px solid $rock-gray;
+          border-radius: 20px;
+          background: white;
+          color: $rock-gray;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &.active {
+            background: $safety-orange;
+            color: white;
+            border-color: $safety-orange;
+
+            .color-dot {
+              border-color: white;
+            }
+          }
+
+          &:hover {
+            background: lighten($safety-orange, 35%);
+          }
+
+          &.color-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0.8rem;
+
+            .color-dot {
+              width: 16px;
+              height: 16px;
+              border-radius: 50%;
+              border: 1px solid transparent;
+              display: inline-block;
+              
+              &.mixed {
+                background: linear-gradient(45deg, 
+                  #ff4444 0%, 
+                  #ff8c42 20%, 
+                  #ffd700 40%, 
+                  #3cb371 60%, 
+                  #4169e1 80%, 
+                  #9370db 100%
+                );
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .video-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+
+    .video-container {
+      display: flex;
+      gap: 1rem;
+      transition: transform 0.5s ease;
+    }
+
+    .video-item {
+      flex: 0 0 calc(25% - 0.75rem);
+      position: relative;
+      
+      .route-info {
+        padding: 1rem;
+        background: rgba($rock-gray, 0.9);
+        color: white;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+
+        h4 {
+          font-size: 1.1rem;
+          margin-bottom: 0.5rem;
+          font-weight: 700;
+        }
+
+        p {
+          font-size: 0.9rem;
+          margin-bottom: 0.3rem;
+
+          &.difficulty {
+            color: $safety-orange;
+            font-weight: 500;
+          }
+
+          &.color {
+            text-transform: capitalize;
+          }
+
+          &.description {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+          }
+        }
+      }
+
+      &:hover .route-info {
+        transform: translateY(0);
+      }
+    }
+
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba($rock-gray, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+
+      &.prev {
+        left: 0;
+      }
+
+      &.next {
+        right: 0;
+      }
+
+      &:hover {
+        background: $safety-orange;
+      }
+
+      &:disabled {
+        background: rgba($rock-gray, 0.3);
+        cursor: not-allowed;
+      }
+    }
+
+    .no-results {
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+      color: $rock-gray;
+      font-size: 1.2rem;
+      background: $rope-white;
+      border-radius: 10px;
+      margin: 2rem 0;
+    }
+  }
+} 

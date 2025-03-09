@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浙大攀岩队官方指南</title>
+    <!-- 字体加载 -->
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Video.js -->
+    <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-mountain"></i>
+                <span>浙大攀岩</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">首页</a></li>
+                <li><a href="#courses">课程</a></li>
+                <li><a href="#routes">线路</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <button class="mobile-menu" aria-label="菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 首页英雄区域 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>浙大攀岩队官方指南</h1>
+            <h2>Since 2016</h2>
+            <div class="intro-cards">
+                <div class="card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>安全装备</h3>
+                    <p>专业装备介绍与使用指南</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-hand-rock"></i>
+                    <h3>基础技巧</h3>
+                    <p>标准动作要领与训练方法</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>赛事荣誉</h3>
+                    <p>历年比赛成绩与精彩回顾</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程资料 -->
+    <section id="courses" class="courses">
+        <h2>课程资料</h2>
+        <div class="course-grid">
+            <!-- 课程卡片将通过JavaScript动态生成 -->
+        </div>
+    </section>
+
+    <!-- 线路演示 -->
+    <section id="routes" class="routes">
+        <h2>线路演示</h2>
+        <div class="filter-container">
+            <div class="filter-group">
+                <label>岩壁</label>
+                <div class="filter-options" data-filter="wall">
+                    <button data-value="boulder" class="active">攀石</button>
+                    <button data-value="lead">难度</button>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label>位置</label>
+                <div class="filter-options" data-filter="position">
+                    <button data-value="left">左侧</button>
+                    <button data-value="center" class="active">中间</button>
+                    <button data-value="right">右侧</button>
+                </div>
+            </div>
+            <div class="filter-group color-filter">
+                <label>颜色</label>
+                <div class="filter-options" data-filter="color">
+                    <button data-value="red" class="color-btn">
+                        <span class="color-dot" style="background-color: #ff4444;"></span>
+                        红色
+                    </button>
+                    <button data-value="orange" class="color-btn">
+                        <span class="color-dot" style="background-color: #ff8c42;"></span>
+                        橙色
+                    </button>
+                    <button data-value="yellow" class="color-btn">
+                        <span class="color-dot" style="background-color: #ffd700;"></span>
+                        黄色
+                    </button>
+                    <button data-value="blue" class="color-btn">
+                        <span class="color-dot" style="background-color: #4169e1;"></span>
+                        蓝色
+                    </button>
+                    <button data-value="green" class="color-btn">
+                        <span class="color-dot" style="background-color: #3cb371;"></span>
+                        绿色
+                    </button>
+                    <button data-value="purple" class="color-btn">
+                        <span class="color-dot" style="background-color: #9370db;"></span>
+                        紫色
+                    </button>
+                    <button data-value="pink" class="color-btn">
+                        <span class="color-dot" style="background-color: #ff69b4;"></span>
+                        粉色
+                    </button>
+                    <button data-value="brown" class="color-btn">
+                        <span class="color-dot" style="background-color: #8b4513;"></span>
+                        棕色
+                    </button>
+                    <button data-value="black" class="color-btn">
+                        <span class="color-dot" style="background-color: #2f2f2f;"></span>
+                        黑色
+                    </button>
+                    <button data-value="gray" class="color-btn">
+                        <span class="color-dot" style="background-color: #808080;"></span>
+                        灰色
+                    </button>
+                    <button data-value="white" class="color-btn">
+                        <span class="color-dot" style="background-color: #ffffff; border: 1px solid #ddd;"></span>
+                        白色
+                    </button>
+                    <button data-value="mixed" class="color-btn">
+                        <span class="color-dot mixed"></span>
+                        混合
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="video-grid">
+            <div class="video-container">
+                <!-- 视频项将通过JavaScript动态生成 -->
+            </div>
+            <button class="nav-button prev" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="nav-button next">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+        <h2>联系我们</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <h3>训练场地</h3>
+                <div class="content">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3>开放时间</h3>
+                <div class="content">
+                    <div class="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 紧急联系人浮窗 -->
+    <div class="emergency-contact">
+        <button class="emergency-btn">
+            <i class="fas fa-phone"></i>
+        </button>
+        <div class="contact-info">
+            <h4>联系方式</h4>
+            <p>微信公众号：浙大凌云户外俱乐部</p>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                © 2024 浙大攀岩队 版权所有
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="微信公众号：浙大凌云户外俱乐部"><i class="fab fa-weixin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 脚本引用 -->
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/bundle.js"></script>
+</body>
+</html> 
