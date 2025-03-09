@@ -62,6 +62,7 @@ rock-climbing-guide/
 ## 贡献指南
 
 - 课程资料文件夹：https://bqq5gg6kt7d.feishu.cn/drive/folder/VphRf3HhLlyWzydoCXTcwb5TneE?from=from_copylink
+- 线路演示视频：想上传更多请联系邮箱
 
 1. Fork 项目
 2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
