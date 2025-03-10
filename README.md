@@ -53,21 +53,16 @@ rock-climbing-guide/
 │   └── assets/
 │       ├── images/
 │       └── videos/
-├── public/
-│   └── index.html
+├── index.html
 ├── package.json
 ├── webpack.config.js
 └── README.md
 ```
 
-## 浏览器支持
-
-- Chrome (最新版)
-- Firefox (最新版)
-- Safari (最新版)
-- Edge (最新版)
-
 ## 贡献指南
+
+- 课程资料文件夹：https://bqq5gg6kt7d.feishu.cn/drive/folder/VphRf3HhLlyWzydoCXTcwb5TneE?from=from_copylink
+- 线路演示视频：想上传更多请联系邮箱
 
 1. Fork 项目
 2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
@@ -81,5 +76,4 @@ MIT License - 详见 LICENSE 文件
 
 ## 联系方式
 
-- 微信公众号：浙大凌云户外俱乐部
-
+2672430753@qq.com
