@@ -1,3 +1,4 @@
+@use "sass:color";
 // 变量定义
 $rock-gray: #4a4a4a;
 $safety-orange: #ff6b35;
@@ -249,7 +250,7 @@ h1, h2, h3 {
 
       .progress {
         height: 100%;
-        background: linear-gradient(90deg, $safety-orange, lighten($safety-orange, 10%));
+        background: linear-gradient(90deg, $safety-orange, color.adjust($safety-orange, $lightness: 10%));
         border-radius: 3px;
         transition: width 0.3s ease;
       }
@@ -268,13 +269,13 @@ h1, h2, h3 {
       transition: background-color 0.3s ease;
 
       &:hover {
-        background: darken($safety-orange, 10%);
+        background: color.adjust($safety-orange, $lightness: -10%);
       }
     }
 
     .description {
       padding: 0 1.5rem;
-      color: lighten($rock-gray, 20%);
+      color: color.adjust($rock-gray, $lightness: 20%);
       font-size: 0.9rem;
       margin-bottom: 1rem;
     }
@@ -339,7 +340,7 @@ h1, h2, h3 {
           }
 
           &:hover {
-            background: lighten($safety-orange, 35%);
+            background: color.adjust($safety-orange, $lightness: 35%);
           }
 
           &.color-btn {
