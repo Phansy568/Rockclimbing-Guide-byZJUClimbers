@@ -49,7 +49,16 @@ jobs:
 
       # 4. 编译 SCSS 文件
       - name: Compile SCSS
-        run: npx sass src/scss/main.scss dist/styles.css
+        run: npx sass src/scss/main.scss dist/css/styles.css
+
+      - name: Check index.html
+        run: |
+          if [ -f "dist/index.html" ]; then
+            echo "index.html exists"
+          else
+            echo "index.html does not exist"
+            exit 1
+          fi
 
       # 5. 配置 Pages
       - name: Setup Pages
