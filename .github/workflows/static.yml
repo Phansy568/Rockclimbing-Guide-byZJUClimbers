@@ -49,7 +49,7 @@ jobs:
 
       # 4. 编译 SCSS 文件
       - name: Compile SCSS
-        run: npx sass src/scss/main.scss src/css/main.css
+        run: npx sass src/scss/main.scss dist/styles.css
 
       # 5. 配置 Pages
       - name: Setup Pages
