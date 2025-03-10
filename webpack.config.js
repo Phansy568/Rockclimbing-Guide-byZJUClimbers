@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/js/main.js',
@@ -52,5 +53,12 @@ module.exports = {
     compress: true,
     port: 3000,
     hot: true
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './index.html', // 模板文件路径
+      filename: 'index.html',       // 输出文件名
+      inject: 'body',               // 将脚本注入到 body 底部
+    }),
+  ],
 }; 
