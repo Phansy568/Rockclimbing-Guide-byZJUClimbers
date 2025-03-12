@@ -67,53 +67,52 @@ courses.forEach(course => {
         </div>
         <h3>${course.title}</h3>
         <p class="description">${course.description}</p>
-        <div class="progress-bar">
-            <div class="progress" style="width: ${course.progress}%"></div>
-        </div>
         <a href="${course.link}" target="_blank" class="learn-btn">立即学习</a>
     `;
     courseGrid.appendChild(card);
 });
 
 // 视频播放器初始化
-const player = videojs('route-video', {
-    controls: true,
-    fluid: true,
-    sources: [
-        {
-            src: '/assets/videos/demo-480p.mp4',
-            type: 'video/mp4',
-            label: '480p'
-        },
-        {
-            src: '/assets/videos/demo-720p.mp4',
-            type: 'video/mp4',
-            label: '720p'
-        },
-        {
-            src: '/assets/videos/demo-1080p.mp4',
-            type: 'video/mp4',
-            label: '1080p'
-        }
-    ]
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const player = videojs('route-video', {
+        controls: true,
+        fluid: true,
+        sources: [
+            {
+                src: '/src/assets/videos/demo-480p.mp4',
+                type: 'video/mp4',
+                label: '480p'
+            },
+            {
+                src: '/src/assets/videos/demo-720p.mp4',
+                type: 'video/mp4',
+                label: '720p'
+            },
+            {
+                src: '/src/assets/videos/demo-1080p.mp4',
+                type: 'video/mp4',
+                label: '1080p'
+            }
+        ]
+    });
 
-// 自定义播放速度控制
-const speeds = [0.5, 1, 1.5, 2];
-const speedButton = document.createElement('button');
-speedButton.className = 'vjs-speed-button vjs-menu-button';
-speedButton.innerHTML = '1x';
-player.controlBar.addChild('button', {
-    el: speedButton
-});
+    // 自定义播放速度控制
+    const speeds = [0.5, 1, 1.5, 2];
+    const speedButton = document.createElement('button');
+    speedButton.className = 'vjs-speed-button vjs-menu-button';
+    speedButton.innerHTML = '1x';
+    player.controlBar.addChild('button', {
+        el: speedButton
+    });
 
-let currentSpeedIndex = 1;
-speedButton.onclick = () => {
-    currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-    const newSpeed = speeds[currentSpeedIndex];
-    player.playbackRate(newSpeed);
-    speedButton.innerHTML = newSpeed + 'x';
-};
+    let currentSpeedIndex = 1;
+    speedButton.onclick = () => {
+        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
+        const newSpeed = speeds[currentSpeedIndex];
+        player.playbackRate(newSpeed);
+        speedButton.innerHTML = newSpeed + 'x';
+    };
+});
 
 // 地图初始化
 const map = L.map('map').setView([30.308829, 120.086003], 15);
@@ -209,140 +208,44 @@ function parseVideoFilename(filename) {
 }
 
 // 更新路线数据
-const routes = [
-    {
-        id: 1,
-        title: '攀石基础路线',
-        video: 'boulder_left_red_V2.MP4',
-        thumbnail: 'course1.jpg',
-        description: '适合初学者的基础路线，重点练习抓力和脚法'
-    },
-    {
-        id: 2,
-        title: '中间横向路线',
-        video: 'boulder_center_blue_V3.MP4',
-        thumbnail: 'course2.jpg',
-        description: '横向移动训练，锻炼核心力量和平衡感'
-    },
-    {
-        id: 3,
-        title: '右侧垂直路线',
-        video: 'boulder_right_yellow_V4.MP4',
-        thumbnail: 'course1.jpg',
-        description: '垂直上升路线，练习动态动作和手臂力量'
-    },
-    {
-        id: 4,
-        title: '综合难度路线',
-        video: 'boulder_center_purple_V5.MP4',
-        thumbnail: 'course2.jpg',
-        description: '综合性路线，需要良好的技术和体能基础'
-    },
-    {
-        id: 5,
-        title: '粉色动力路线',
-        wall: 'boulder',
-        position: 'left',
-        color: 'pink',
-        difficulty: 'V3',
-        thumbnail: 'course1.jpg',
-        video: 'demo-0.MP4',
-        description: '需要一定的动力动作，考验爆发力'
-    },
-    {
-        id: 6,
-        title: '棕色技术路线',
-        wall: 'boulder',
-        position: 'right',
-        color: 'brown',
-        difficulty: 'V4',
-        thumbnail: 'course2.jpg',
-        video: 'demo-0.MP4',
-        description: '技术性路线，需要良好的重心控制'
-    },
-    {
-        id: 7,
-        title: '混合色高级路线',
-        wall: 'boulder',
-        position: 'center',
-        color: 'mixed',
-        difficulty: 'V6',
-        thumbnail: 'course1.jpg',
-        video: 'demo-0.MP4',
-        description: '综合多个颜色的进阶路线，挑战性强'
-    },
-    {
-        id: 8,
-        title: '白色平衡路线',
-        wall: 'boulder',
-        position: 'left',
-        color: 'white',
-        difficulty: 'V3',
-        thumbnail: 'course2.jpg',
-        video: 'demo-0.MP4',
-        description: '重点训练平衡感和精确性的路线'
+// 从CSV文件加载路线数据
+async function loadRoutes() {
+    try {
+        const response = await fetch('/src/video_list.csv');
+        const csvText = await response.text();
+        const lines = csvText.split('\n').slice(1); // 跳过标题行
+        
+        return lines.map(line => {
+            const [title, bv, tags] = line.split(',');
+            const tagArray = tags.split(';');
+            
+            return {
+                title: title,
+                bvid: bv,
+                wall: 'boulder', // 默认值
+                position: tagArray[1] || '', // 中间
+                color: tagArray[2] || '', // 灰色
+                difficulty: '', // 暂无难度信息
+                description: `标签：${tagArray.join('、')}`
+            };
+        }).filter(route => route.title && route.bvid); // 过滤掉无效数据
+    } catch (error) {
+        console.error('加载视频数据失败:', error);
+        return [];
     }
-].map(route => {
-    // 从文件名解析路线信息
-    const info = parseVideoFilename(route.video);
-    return {
-        ...route,
-        wall: info ? info.wall : 'boulder',
-        position: info ? info.position : 'center',
-        color: info ? info.color : 'red',
-        difficulty: info ? info.difficulty : 'V2'
-    };
-});
+}
 
-// 筛选器状态
+// 路线数据
+let routes = [];
+
 let filters = {
-    wall: 'boulder',
-    position: 'center',
+    wall: null,
+    position: null,
     color: null
 };
 
-// 当前页码
+const itemsPerPage = 6;
 let currentPage = 0;
-const itemsPerPage = 4;
-
-// 初始化筛选器
-function initializeFilters() {
-    const filterButtons = document.querySelectorAll('.filter-options button');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filterGroup = button.parentElement;
-            const filterType = filterGroup.dataset.filter;
-            const value = button.dataset.value;
-            
-            // 如果点击已激活的按钮，则取消选择
-            if (button.classList.contains('active')) {
-                button.classList.remove('active');
-                filters[filterType] = null;
-            } else {
-                // 更新按钮状态
-                filterGroup.querySelectorAll('button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                button.classList.add('active');
-                
-                // 更新筛选状态
-                filters[filterType] = value;
-            }
-            
-            // 重置页码并更新显示
-            currentPage = 0;
-            updateRoutes();
-            
-            // 调试输出
-            console.log('Current filters:', filters);
-        });
-    });
-
-    // 设置初始状态
-    document.querySelector('[data-filter="wall"] [data-value="boulder"]').classList.add('active');
-    document.querySelector('[data-filter="position"] [data-value="center"]').classList.add('active');
-}
 
 // 更新路线显示
 function updateRoutes() {
@@ -381,10 +284,13 @@ function updateRoutes() {
 
     container.innerHTML = pageRoutes.map(route => `
         <div class="video-item">
-            <video class="video-js vjs-default-skin" controls preload="none"
-                   poster="/assets/images/${route.thumbnail}">
-                <source src="/assets/videos/${route.video}" type="video/mp4">
-            </video>
+            <iframe src="https://player.bilibili.com/player.html?bvid=${route.bvid}&page=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true">
+            </iframe>
             <div class="route-info">
                 <h4>${route.title}</h4>
                 <p class="difficulty">难度：${route.difficulty}</p>
@@ -393,18 +299,6 @@ function updateRoutes() {
             </div>
         </div>
     `).join('');
-
-    // 初始化视频播放器
-    pageRoutes.forEach((route, index) => {
-        videojs(container.children[index].querySelector('video'), {
-            controls: true,
-            fluid: true,
-            preload: 'metadata'
-        });
-    });
-
-    // 设置容器位置
-    container.style.transform = `translateX(0)`;
 }
 
 // 导航按钮事件
@@ -430,7 +324,67 @@ document.querySelector('.nav-button.next').addEventListener('click', () => {
 });
 
 // 初始化筛选器和显示
-document.addEventListener('DOMContentLoaded', () => {
-    initializeFilters();
-    updateRoutes();
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        // 加载路线数据
+        routes = await loadRoutes();
+        
+        // 设置初始筛选按钮状态
+        const filterGroups = document.querySelectorAll('.filter-options');
+        filterGroups.forEach(group => {
+            const filterType = group.dataset.filter;
+            const allButton = group.querySelector('button[data-value="all"]');
+            if (allButton) {
+                allButton.classList.add('active');
+            }
+        });
+
+        // 初始显示所有路线
+        updateRoutes();
+    } catch (error) {
+        console.error('初始化失败:', error);
+    }
 });
+
+
+// 筛选按钮点击事件处理
+const filterButtons = document.querySelectorAll('.filter-options button');
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const filterGroup = button.parentElement;
+        const filterType = filterGroup.dataset.filter;
+        
+        // 移除同组中所有按钮的active类
+        filterGroup.querySelectorAll('button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // 为当前点击的按钮添加active类
+        button.classList.add('active');
+        
+        // 更新筛选条件
+        filters[filterType] = button.dataset.value === 'all' ? null : button.dataset.value;
+        
+        // 重置页码并更新显示
+        currentPage = 0;
+        updateRoutes();
+    });
+});
+
+
+
+// 导航按钮事件处理
+document.querySelector('.nav-button.prev').addEventListener('click', () => {
+    if (currentPage > 0) {
+        currentPage--;
+        updateVideoDisplay();
+    }
+});
+
+document.querySelector('.nav-button.next').addEventListener('click', () => {
+    currentPage++;
+    updateVideoDisplay();
+});
+
+// 初始化显示
+updateVideoDisplay();

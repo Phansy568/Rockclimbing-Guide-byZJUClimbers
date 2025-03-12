@@ -195,7 +195,6 @@ h1, h2, h3 {
 
   h2 {
     text-align: center;
-    font-family: 'Noto Sans SC', sans-serif;
     font-size: 2.5rem;
     font-weight: 700;
     color: $rock-gray;
@@ -239,21 +238,6 @@ h1, h2, h3 {
       color: $rock-gray;
       padding: 1.5rem 1.5rem 0.5rem;
       margin: 0;
-    }
-
-    .progress-bar {
-      margin: 1rem 1.5rem;
-      height: 6px;
-      background: #eee;
-      border-radius: 3px;
-      overflow: hidden;
-
-      .progress {
-        height: 100%;
-        background: linear-gradient(90deg, $safety-orange, color.adjust($safety-orange, $lightness: 10%));
-        border-radius: 3px;
-        transition: width 0.3s ease;
-      }
     }
 
     .learn-btn {
@@ -374,179 +358,112 @@ h1, h2, h3 {
   }
 
   .video-grid {
-    max-width: 1200px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
 
     .video-container {
-      display: flex;
-      gap: 1rem;
-      transition: transform 0.5s ease;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      width: 100%;
     }
 
-    .video-item {
-      flex: 0 0 calc(25% - 0.75rem);
-      position: relative;
-      
-      .route-info {
-        padding: 1rem;
-        background: rgba($rock-gray, 0.9);
-        color: white;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transform: translateY(100%);
-        transition: transform 0.3s ease;
-
-        h4 {
-          font-size: 1.1rem;
-          margin-bottom: 0.5rem;
-          font-weight: 700;
-        }
-
-        p {
-          font-size: 0.9rem;
-          margin-bottom: 0.3rem;
-
-          &.difficulty {
-            color: $safety-orange;
-            font-weight: 500;
-          }
-
-          &.color {
-            text-transform: capitalize;
-          }
-
-          &.description {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            line-height: 1.4;
-          }
-        }
-      }
-
-      &:hover .route-info {
-        transform: translateY(0);
-      }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3rem;
+      font-size: 1.2rem;
+      color: lighten($rock-gray, 20%);
     }
 
     .nav-button {
-      position: absolute;
+      position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
       background: rgba($rock-gray, 0.8);
       color: white;
       border: none;
       border-radius: 50%;
-      cursor: pointer;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       transition: background-color 0.3s ease;
 
-      &.prev {
-        left: 0;
-      }
-
-      &.next {
-        right: 0;
-      }
-
-      &:hover {
-        background: $safety-orange;
+      &:hover:not(:disabled) {
+        background: $rock-gray;
       }
 
       &:disabled {
-        background: rgba($rock-gray, 0.3);
+        opacity: 0.5;
         cursor: not-allowed;
       }
-    }
 
-    .no-results {
-      width: 100%;
-      padding: 2rem;
-      text-align: center;
-      color: $rock-gray;
-      font-size: 1.2rem;
-      background: $rope-white;
-      border-radius: 10px;
-      margin: 2rem 0;
+      &.prev {
+        left: 1rem;
+      }
+
+      &.next {
+        right: 1rem;
+      }
     }
   }
 } 
 
 // 联系我们样式
-.contact-section {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 1000;
+.contact {
+  padding: 4rem 2rem;
+  background-color: $rope-white;
 
-  .contact-info {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 300px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    padding: 1.5rem;
-    transform: scale(0.8);
-    opacity: 0;
-    visibility: hidden;
-    transform-origin: bottom right;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $rock-gray;
+    margin-bottom: 3rem;
+  }
 
-    &.active {
-      transform: scale(1);
-      opacity: 1;
-      visibility: visible;
-    }
+  .contact-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    
+    .contact-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      text-align: center;
 
-    h3 {
-      color: $rock-gray;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid $safety-orange;
-    }
+      h3 {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 1.3rem;
+        color: $rock-gray;
+        margin-bottom: 1rem;
+      }
 
-    .contact-list {
-      list-style: none;
+      p {
+        color: color.adjust($rock-gray, $lightness: 15%);
+        line-height: 1.6;
+      }
 
-      li {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 0.8rem 0;
-        border-bottom: 1px solid rgba($rock-gray, 0.1);
+      .time-info {
+        margin-top: 1rem;
 
-        &:last-child {
-          border-bottom: none;
-        }
-
-        i {
-          color: $safety-orange;
-          font-size: 1.2rem;
-          flex-shrink: 0;
-        }
-
-        .contact-details {
-          flex-grow: 1;
-
-          .title {
+        p {
+          margin: 0.5rem 0;
+          
+          .highlight {
+            color: $safety-orange;
             font-weight: 500;
-            color: $rock-gray;
-            margin-bottom: 0.2rem;
-          }
-
-          .info {
-            font-size: 0.9rem;
-            color: color.adjust($rock-gray, $lightness: 20%);
           }
         }
       }
@@ -562,7 +479,173 @@ h1, h2, h3 {
     .contact-info {
       width: calc(100vw - 3rem);
       right: -1.5rem;
-      max-width: 300px;
+      max-width: 320px;
+      padding: 1.5rem;
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .contact-list li {
+        padding: 0.8rem 0;
+
+        i {
+          font-size: 1.2rem;
+        }
+
+        .contact-details {
+          .title {
+            font-size: 1rem;
+          }
+
+          .info {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 路线表单样式
+.route-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($rock-gray, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.route-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  h3 {
+    color: $rock-gray;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: $rock-gray;
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: $safety-orange;
+      }
+    }
+
+    textarea {
+      height: 100px;
+      resize: vertical;
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button {
+      flex: 1;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 25px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &.submit-btn {
+        background: $safety-orange;
+        color: white;
+
+        &:hover {
+          background: color.adjust($safety-orange, $lightness: -10%);
+        }
+      }
+
+      &.cancel-btn {
+        background: #eee;
+        color: $rock-gray;
+
+        &:hover {
+          background: #ddd;
+        }
+      }
+    }
+  }
+}
+
+// 视频容器样式更新
+.video-item {
+  iframe {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .contact-section {
+    bottom: 1.5rem;
+    right: 1.5rem;
+
+    .contact-info {
+      width: calc(100vw - 3rem);
+      right: -1.5rem;
+      max-width: 320px;
+      padding: 1.5rem;
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .contact-list li {
+        padding: 0.8rem 0;
+
+        i {
+          font-size: 1.2rem;
+        }
+
+        .contact-details {
+          .title {
+            font-size: 1rem;
+          }
+
+          .info {
+            font-size: 0.9rem;
+          }
+        }
+      }
     }
   }
 }
