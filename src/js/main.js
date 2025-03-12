@@ -1,6 +1,10 @@
 // 导入样式
 import '../scss/main.scss';
 
+// 导入图片
+import course1Image from '../assets/images/course1.jpg';
+import course2Image from '../assets/images/course2.jpg';
+
 // 导航栏滚动效果
 const nav = document.querySelector('.main-nav');
 const mobileMenuBtn = document.querySelector('.mobile-menu');
@@ -24,28 +28,28 @@ mobileMenuBtn.addEventListener('click', () => {
 const courses = [
     {
         title: '先锋保护技术',
-        image: 'course1.jpg',
+        image: course1Image,
         progress: 75,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
         description: '学习先锋攀岩的保护技术和安全要领'
     },
     {
         title: '绳结打结技巧',
-        image: 'course2.jpg',
+        image: course2Image,
         progress: 60,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef',
         description: '掌握各种攀岩常用绳结的打法'
     },
     {
         title: '攀岩动作要领',
-        image: 'course1.jpg', // 暂时复用course1.jpg
+        image: course1Image, // 暂时复用course1.jpg
         progress: 45,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
         description: '学习基础攀岩动作和技巧要领'
     },
     {
         title: '攀岩安全规范',
-        image: 'course2.jpg', // 暂时复用course2.jpg
+        image: course2Image, // 暂时复用course2.jpg
         progress: 90,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef',
         description: '了解攀岩安全规范和注意事项'
@@ -59,7 +63,7 @@ courses.forEach(course => {
     card.className = 'course-card';
     card.innerHTML = `
         <div class="course-image" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
-            <img src="/assets/images/${course.image}" alt="${course.title}">
+            <img src="${course.image}" alt="${course.title}">
         </div>
         <h3>${course.title}</h3>
         <p class="description">${course.description}</p>
@@ -437,4 +441,4 @@ document.querySelector('.nav-button.next').addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     initializeFilters();
     updateRoutes();
-}); 
+});
