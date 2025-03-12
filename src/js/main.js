@@ -149,14 +149,6 @@ accordionItems.forEach(item => {
     });
 });
 
-// 紧急联系人浮窗
-const emergencyBtn = document.querySelector('.emergency-btn');
-const contactInfo = document.querySelector('.contact-info');
-
-emergencyBtn.addEventListener('click', () => {
-    contactInfo.classList.toggle('active');
-});
-
 // 文件上传处理
 const uploadBtn = document.querySelector('.upload-btn');
 const fileInput = document.createElement('input');

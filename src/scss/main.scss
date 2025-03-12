@@ -478,3 +478,91 @@ h1, h2, h3 {
     }
   }
 } 
+
+// 联系我们样式
+.contact-section {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+
+  .contact-info {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 300px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 1.5rem;
+    transform: scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.active {
+      transform: scale(1);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    h3 {
+      color: $rock-gray;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid $safety-orange;
+    }
+
+    .contact-list {
+      list-style: none;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba($rock-gray, 0.1);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        i {
+          color: $safety-orange;
+          font-size: 1.2rem;
+          flex-shrink: 0;
+        }
+
+        .contact-details {
+          flex-grow: 1;
+
+          .title {
+            font-weight: 500;
+            color: $rock-gray;
+            margin-bottom: 0.2rem;
+          }
+
+          .info {
+            font-size: 0.9rem;
+            color: color.adjust($rock-gray, $lightness: 20%);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-mobile) {
+  .contact-section {
+    bottom: 1.5rem;
+    right: 1.5rem;
+
+    .contact-info {
+      width: calc(100vw - 3rem);
+      right: -1.5rem;
+      max-width: 300px;
+    }
+  }
+}
