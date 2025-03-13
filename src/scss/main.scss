@@ -649,41 +649,8 @@ h1, h2, h3 {
 
 // 添加触摸屏设备媒体查询，禁用按钮 hover 效果
 @media (any-hover: none) {
-  // 导航链接
-  .main-nav .nav-links a:hover:not(.active) {
-    color: $rope-white; // 恢复默认颜色，取消 hover 效果
-  }
-  
-  // 英雄区域卡片
-  .hero .intro-cards .card:hover {
-    transform: none;
-  }
-  
-  // 课程卡片
-  .courses .course-card:hover {
-    transform: none;
-  }
-  
-  .courses .course-card .learn-btn:hover {
-    background: $safety-orange; // 恢复默认颜色，取消 hover 效果
-  }
-  
   // 过滤器按钮
-  .routes .filter-container .filter-group .filter-options button:hover:not(.active) {
+  .button:hover:not(.active) {
     background: white; // 恢复默认背景，取消 hover 效果
-  }
-  
-  // 表单按钮
-  .route-form .form-actions button.submit-btn:hover {
-    background: $safety-orange; // 恢复默认颜色，取消 hover 效果
-  }
-  
-  .route-form .form-actions button.cancel-btn:hover {
-    background: #eee; // 恢复默认颜色，取消 hover 效果
-  }
-  
-  // 导航按钮
-  .routes .video-grid .nav-button:hover:not(:disabled) {
-    background: rgba($rock-gray, 0.8); // 恢复默认颜色，取消 hover 效果
   }
 }
