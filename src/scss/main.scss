@@ -647,9 +647,15 @@ h1, h2, h3 {
   }
 }
 
-// 添加触摸屏设备媒体查询，禁用按钮 hover 效果
-@media (hover: none) {
+@media (hover: hover) {
   .button:hover {
-      background-color: initial !important;
+      background-color: #ddd;
   }
 }
+
+@media (hover: none) {
+  .button:hover {
+      pointer-events: none;
+  }
+}
+
