@@ -648,7 +648,7 @@ h1, h2, h3 {
 }
 
 // 添加触摸屏设备媒体查询，禁用按钮 hover 效果
-@media (hover: none) {
+@media (any-hover: none) {
   // 导航链接
   .main-nav .nav-links a:hover:not(.active) {
     color: $rope-white; // 恢复默认颜色，取消 hover 效果
