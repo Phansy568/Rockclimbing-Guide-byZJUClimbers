@@ -219,15 +219,7 @@ async function loadRoutes() {
         //const response = await fetch('/src/video_list.csv');
         //const csvText = await response.text();
         //const lines = csvText.split('\n').slice(1); // 跳过标题行
-        const lines = ['新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;right;red', 
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;left;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;left;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',
-            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',           
+        const lines = ['新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red'    
         ]
         return lines.map(line => {
             const [title, bv, tags] = line.split(',');
