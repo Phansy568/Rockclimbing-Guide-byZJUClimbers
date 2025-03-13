@@ -5,6 +5,18 @@ import '../scss/main.scss';
 import course1Image from '../assets/images/course1.jpg';
 import course2Image from '../assets/images/course2.jpg';
 
+// 路线数据
+let routes = [];
+
+let filters = {
+    wall: 'boulder',
+    position: 'center',
+    color: 'red'
+};
+
+const itemsPerPage = 6;
+let currentPage = 0;
+
 // 导航栏滚动效果
 const nav = document.querySelector('.main-nav');
 const mobileMenuBtn = document.querySelector('.mobile-menu');
@@ -72,46 +84,39 @@ courses.forEach(course => {
     courseGrid.appendChild(card);
 });
 
-// 视频播放器初始化
-document.addEventListener('DOMContentLoaded', () => {
-    const player = videojs('route-video', {
-        controls: true,
-        fluid: true,
-        sources: [
-            {
-                src: '/src/assets/videos/demo-480p.mp4',
-                type: 'video/mp4',
-                label: '480p'
-            },
-            {
-                src: '/src/assets/videos/demo-720p.mp4',
-                type: 'video/mp4',
-                label: '720p'
-            },
-            {
-                src: '/src/assets/videos/demo-1080p.mp4',
-                type: 'video/mp4',
-                label: '1080p'
-            }
-        ]
-    });
+document.addEventListener('DOMContentLoaded', async() => {
+    try {
+        // 加载路线数据（如果需要）
+        routes = await loadRoutes();
 
-    // 自定义播放速度控制
-    const speeds = [0.5, 1, 1.5, 2];
-    const speedButton = document.createElement('button');
-    speedButton.className = 'vjs-speed-button vjs-menu-button';
-    speedButton.innerHTML = '1x';
-    player.controlBar.addChild('button', {
-        el: speedButton
-    });
+        // 设置初始筛选按钮状态
+        const filterGroups = document.querySelectorAll('.filter-options');
+        // 为每个按钮添加点击事件监听器
+        filterGroups.forEach(group => {
+            group.addEventListener('click', event => {
+                if (event.target.tagName === 'BUTTON') {
+                    // 移除同组其他按钮的 active 类
+                    group.querySelectorAll('button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    // 为当前点击的按钮添加 active 类
+                    event.target.classList.add('active');
+                    const filterType = group.getAttribute('data-filter');
+                    const filterValue = event.target.getAttribute('data-value');
+                    // 更新筛选条件
+                    filters[filterType] = filterValue;
+                    console.log('Filters:', filters);
+                    // 更新路线显示（如果需要）
+                    updateRoutes();
+                }
+            });
+        });
 
-    let currentSpeedIndex = 1;
-    speedButton.onclick = () => {
-        currentSpeedIndex = (currentSpeedIndex + 1) % speeds.length;
-        const newSpeed = speeds[currentSpeedIndex];
-        player.playbackRate(newSpeed);
-        speedButton.innerHTML = newSpeed + 'x';
-    };
+        // 初始显示所有路线（如果需要）
+        updateRoutes();
+    } catch (error) {
+        console.error('初始化失败:', error);
+    }
 });
 
 // 地图初始化
@@ -165,7 +170,7 @@ fileInput.addEventListener('change', (e) => {
         console.log('Selected file:', file.name);
     }
 });
-
+/*
 // GPX文件下载
 const downloadBtn = document.querySelector('.download-btn');
 downloadBtn.addEventListener('click', () => {
@@ -206,15 +211,24 @@ function parseVideoFilename(filename) {
     }
     return null;
 }
-
+*/
 // 更新路线数据
 // 从CSV文件加载路线数据
 async function loadRoutes() {
     try {
-        const response = await fetch('/src/video_list.csv');
-        const csvText = await response.text();
-        const lines = csvText.split('\n').slice(1); // 跳过标题行
-        
+        //const response = await fetch('/src/video_list.csv');
+        //const csvText = await response.text();
+        //const lines = csvText.split('\n').slice(1); // 跳过标题行
+        const lines = ['新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;center;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;right;red', 
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;left;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1Lt4y1i7GP,boulder;left;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',
+            '新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red',           
+        ]
         return lines.map(line => {
             const [title, bv, tags] = line.split(',');
             const tagArray = tags.split(';');
@@ -222,7 +236,7 @@ async function loadRoutes() {
             return {
                 title: title,
                 bvid: bv,
-                wall: 'boulder', // 默认值
+                wall: tagArray[0], // 默认值
                 position: tagArray[1] || '', // 中间
                 color: tagArray[2] || '', // 灰色
                 difficulty: '', // 暂无难度信息
@@ -235,22 +249,10 @@ async function loadRoutes() {
     }
 }
 
-// 路线数据
-let routes = [];
-
-let filters = {
-    wall: null,
-    position: null,
-    color: null
-};
-
-const itemsPerPage = 6;
-let currentPage = 0;
-
 // 更新路线显示
 function updateRoutes() {
     console.log('Updating routes with filters:', filters);
-    
+    console.log(routes);
     // 筛选路线
     const filteredRoutes = routes.filter(route => {
         const wallMatch = !filters.wall || route.wall === filters.wall;
@@ -261,7 +263,7 @@ function updateRoutes() {
     });
 
     console.log('Filtered routes:', filteredRoutes);
-
+/*
     // 计算分页
     const totalPages = Math.ceil(filteredRoutes.length / itemsPerPage);
     const start = currentPage * itemsPerPage;
@@ -273,15 +275,35 @@ function updateRoutes() {
     const nextButton = document.querySelector('.nav-button.next');
     prevButton.disabled = currentPage === 0;
     nextButton.disabled = currentPage >= totalPages - 1;
-
+*/
     // 生成视频项
     const container = document.querySelector('.video-container');
-    
-    if (pageRoutes.length === 0) {
+    if (filteredRoutes.length === 0) {
         container.innerHTML = '<div class="no-results">没有找到符合条件的路线</div>';
         return;
     }
-
+    container.innerHTML = '';
+    filteredRoutes.forEach(route => {
+        const card = document.createElement('div');
+        card.className = 'video-item';
+        card.innerHTML = `
+            <iframe src="https://player.bilibili.com/player.html?bvid=${route.bvid}&page=1&autoplay=0" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true">
+            </iframe>
+            <div class="route-info">
+                <h4>${route.title}</h4>
+                <p class="difficulty">难度：${route.difficulty}</p>
+                <p class="color">颜色：${route.color}</p>   
+                <p class="description">${route.description}</p>
+            </div>
+            
+        `;
+        container.appendChild(card);})
+    /*
     container.innerHTML = pageRoutes.map(route => `
         <div class="video-item">
             <iframe src="https://player.bilibili.com/player.html?bvid=${route.bvid}&page=1" 
@@ -299,30 +321,10 @@ function updateRoutes() {
             </div>
         </div>
     `).join('');
+    */
 }
 
-// 导航按钮事件
-document.querySelector('.nav-button.prev').addEventListener('click', () => {
-    if (currentPage > 0) {
-        currentPage--;
-        updateRoutes();
-    }
-});
-
-document.querySelector('.nav-button.next').addEventListener('click', () => {
-    const filteredRoutes = routes.filter(route => {
-        return (!filters.wall || route.wall === filters.wall) &&
-               (!filters.position || route.position === filters.position) &&
-               (!filters.color || route.color === filters.color);
-    });
-    const totalPages = Math.ceil(filteredRoutes.length / itemsPerPage);
-    
-    if (currentPage < totalPages - 1) {
-        currentPage++;
-        updateRoutes();
-    }
-});
-
+/*
 // 初始化筛选器和显示
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -345,8 +347,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('初始化失败:', error);
     }
 });
-
-
+*/
+/*
 // 筛选按钮点击事件处理
 const filterButtons = document.querySelectorAll('.filter-options button');
 filterButtons.forEach(button => {
@@ -370,6 +372,7 @@ filterButtons.forEach(button => {
         updateRoutes();
     });
 });
+*/
 
 
 
