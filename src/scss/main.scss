@@ -648,9 +648,8 @@ h1, h2, h3 {
 }
 
 // 添加触摸屏设备媒体查询，禁用按钮 hover 效果
-@media (any-hover: none) {
-  // 过滤器按钮
-  .button:hover:not(.active) {
-    background: white; // 恢复默认背景，取消 hover 效果
+@media (hover: none) {
+  .button:hover {
+      background-color: initial !important;
   }
 }
