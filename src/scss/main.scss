@@ -188,18 +188,19 @@ h1, h2, h3 {
   margin: 3rem 0;
 }
 
+// 添加统一的部分标题样式
+.courses h2, .routes h2, .contact h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $rock-gray;
+  margin-bottom: 3rem;
+}
+
 // 课程模块样式
 .courses {
   padding: 4rem 2rem;
   background-color: $rope-white;
-
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: $rock-gray;
-    margin-bottom: 3rem;
-  }
 
   .course-grid {
     display: grid;
@@ -270,7 +271,7 @@ h1, h2, h3 {
 .routes {
   padding: 4rem 2rem;
   background-color: white;
-
+  
   .filter-container {
     max-width: 1200px;
     margin: 0 auto 2rem;
@@ -367,9 +368,12 @@ h1, h2, h3 {
 
     .video-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      width: 100%;
+      grid-template-columns: repeat(3, minmax(250px, 1fr)); /* 固定三列 */
+      gap: 4rem;
+      width: 90%;
+      min-height: 400px; /* 防止拉伸 */
+      justify-items: center; /* 确保所有项目都在格子中居中 */
+      margin: 0 auto;
     }
 
     .no-results {
@@ -377,7 +381,7 @@ h1, h2, h3 {
       text-align: center;
       padding: 3rem;
       font-size: 1.2rem;
-      color: lighten($rock-gray, 20%);
+      color: color.adjust($rock-gray, $lightness: 20%);
     }
 
     .nav-button {
@@ -420,14 +424,6 @@ h1, h2, h3 {
 .contact {
   padding: 4rem 2rem;
   background-color: $rope-white;
-
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: $rock-gray;
-    margin-bottom: 3rem;
-  }
 
   .contact-content {
     max-width: 800px;
@@ -608,7 +604,8 @@ h1, h2, h3 {
 .video-item {
   iframe {
     width: 100%;
-    height: 200px;
+    height: 500px;
+    aspect-ratio: 9 / 18;
     border-radius: 10px;
   }
 }
