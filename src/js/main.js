@@ -9,9 +9,9 @@ import course2Image from '../assets/images/course2.jpg';
 let routes = [];
 
 let filters = {
-    wall: 'boulder',
-    position: 'center',
-    color: 'red'
+    wall: 'all',    // 修改默认值为'all'表示全部
+    position: 'all', // 修改默认值为'all'表示全部
+    color: 'all'     // 修改默认值为'all'表示全部
 };
 
 const itemsPerPage = 6;
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         const filterGroups = document.querySelectorAll('.filter-options');
         // 为每个按钮添加点击事件监听器
         filterGroups.forEach(group => {
-            group.addEventListener('click', event => {
+                        group.addEventListener('click', event => {
                 if (event.target.tagName === 'BUTTON') {
                     // 移除同组其他按钮的 active 类
                     group.querySelectorAll('button').forEach(btn => {
@@ -247,9 +247,9 @@ function updateRoutes() {
     console.log(routes);
     // 筛选路线
     const filteredRoutes = routes.filter(route => {
-        const wallMatch = !filters.wall || route.wall === filters.wall;
-        const positionMatch = !filters.position || route.position === filters.position;
-        const colorMatch = !filters.color || route.color === filters.color;
+        const wallMatch = filters.wall === 'all' || route.wall === filters.wall;
+        const positionMatch = filters.position === 'all' || route.position === filters.position;
+        const colorMatch = filters.color === 'all' || route.color === filters.color;
         
         return wallMatch && positionMatch && colorMatch;
     });
