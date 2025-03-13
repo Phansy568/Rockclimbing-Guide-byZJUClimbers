@@ -420,6 +420,33 @@ h1, h2, h3 {
   }
 } 
 
+@media (max-width: $breakpoint-mobile) {
+  .routes {
+    .video-grid {
+      .video-container {
+        display: grid;
+        grid-template-columns: 1fr; /* 移动端改为单列布局 */
+        width: 100%;
+        gap: 2rem;
+      }
+      
+      .no-results {
+        grid-column: 1;
+        width: 100%;
+        text-align: center;
+        padding: 1.5rem;
+      }
+    }
+  }
+}
+
+// 平板设备的响应式布局
+@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
+  .routes .video-grid .video-container {
+    grid-template-columns: repeat(2, 1fr); /* 平板设备使用两列布局 */
+  }
+}
+
 // 联系我们样式
 .contact {
   padding: 4rem 2rem;
