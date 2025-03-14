@@ -674,15 +674,50 @@ h1, h2, h3 {
   }
 }
 
-@media (hover: hover) {
-  .button:hover {
-      background-color: #ddd;
-  }
-}
-
 @media (hover: none) {
   .button:hover {
-      pointer-events: none;
+    pointer-events: none;
+  }
+  
+  // 修复移动端筛选按钮悬浮态问题
+  .filter-options button {
+    // 禁用所有悬浮效果
+    &:hover {
+      background: inherit;
+      color: inherit;
+      border-color: inherit;
+    }
+    
+    // 确保点击时立即应用选中样式
+    &:active {
+      background: $safety-orange;
+      color: white;
+      border-color: $safety-orange;
+    }
+    
+    // 保持选中状态的样式
+    &.active {
+      background: $safety-orange !important;
+      color: white !important;
+      border-color: $safety-orange !important;
+    }
+    
+    // 处理颜色按钮特殊情况
+    &.color-btn {
+      &:hover .color-dot {
+        border-color: inherit;
+      }
+      
+      &:active .color-dot,
+      &.active .color-dot {
+        border-color: white;
+      }
+    }
+  }
+  
+  // 强制移除所有触摸设备上的悬停效果
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 

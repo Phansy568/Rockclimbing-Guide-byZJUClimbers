@@ -91,9 +91,42 @@ document.addEventListener('DOMContentLoaded', async() => {
 
         // 设置初始筛选按钮状态
         const filterGroups = document.querySelectorAll('.filter-options');
-        // 为每个按钮添加点击事件监听器
+        
+        // 检测是否为触摸设备
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        // 为每个按钮添加点击和触摸事件监听器
         filterGroups.forEach(group => {
-                        group.addEventListener('click', event => {
+            const buttons = group.querySelectorAll('button');
+            
+            // 添加触摸设备专用事件处理
+            if (isTouchDevice) {
+                buttons.forEach(button => {
+                    button.addEventListener('touchstart', function(e) {
+                        // 阻止默认行为以防止hover效果
+                        e.preventDefault();
+                        
+                        // 移除同组其他按钮的 active 类
+                        buttons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        
+                        // 为当前点击的按钮添加 active 类
+                        this.classList.add('active');
+                        
+                        const filterType = group.getAttribute('data-filter');
+                        const filterValue = this.getAttribute('data-value');
+                        // 更新筛选条件
+                        filters[filterType] = filterValue;
+                        
+                        // 更新路线显示
+                        updateRoutes();
+                    });
+                });
+            }
+            
+            // 保留原有的点击事件处理
+            group.addEventListener('click', event => {
                 if (event.target.tagName === 'BUTTON') {
                     // 移除同组其他按钮的 active 类
                     group.querySelectorAll('button').forEach(btn => {
@@ -106,7 +139,7 @@ document.addEventListener('DOMContentLoaded', async() => {
                     // 更新筛选条件
                     filters[filterType] = filterValue;
                     console.log('Filters:', filters);
-                    // 更新路线显示（如果需要）
+                    // 更新路线显示
                     updateRoutes();
                 }
             });
