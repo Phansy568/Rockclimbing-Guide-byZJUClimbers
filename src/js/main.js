@@ -115,8 +115,15 @@ document.addEventListener('DOMContentLoaded', async() => {
                         e.preventDefault();
                         e.stopPropagation();
                         
-                        // 确保清除所有按钮的active状态
-                        buttons.forEach(btn => btn.classList.remove('active'));
+                        console.log("微信浏览器按钮点击:", this.textContent);
+                        
+                        // 获取当前组的最新按钮集合
+                        const currentGroupButtons = Array.from(group.querySelectorAll('button'));
+                        
+                        // 确保清除当前组内所有按钮的active状态
+                        currentGroupButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
                         
                         // 手动添加active类
                         this.classList.add('active');
