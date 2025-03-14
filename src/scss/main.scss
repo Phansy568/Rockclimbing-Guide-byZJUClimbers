@@ -718,6 +718,34 @@ h1, h2, h3 {
   // 强制移除所有触摸设备上的悬停效果
   * {
     -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}
+
+// 微信浏览器专用样式
+@supports (-webkit-overflow-scrolling: touch) {
+  .filter-options button {
+    // 硬重置所有状态，避免微信浏览器的默认行为
+    transition: none !important;
+    
+    &:hover, &:focus {
+      background-color: white !important;
+      color: $rock-gray !important;
+      border-color: $rock-gray !important;
+    }
+    
+    &.active {
+      background-color: $safety-orange !important;
+      color: white !important;
+      border-color: $safety-orange !important;
+      
+      &:hover, &:focus {
+        background-color: $safety-orange !important;
+        color: white !important;
+        border-color: $safety-orange !important;
+      }
+    }
   }
 }
 

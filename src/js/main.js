@@ -95,57 +95,98 @@ document.addEventListener('DOMContentLoaded', async() => {
         // 检测是否为触摸设备
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
         
+        // 检测是否为微信内置浏览器
+        const isWechat = /MicroMessenger/i.test(navigator.userAgent);
+        
         // 为每个按钮添加点击和触摸事件监听器
         filterGroups.forEach(group => {
             const buttons = group.querySelectorAll('button');
             
-            // 添加触摸设备专用事件处理
-            if (isTouchDevice) {
+            // 微信浏览器特殊处理
+            if (isWechat) {
+                console.log("检测到微信浏览器，使用特殊处理");
                 buttons.forEach(button => {
-                    button.addEventListener('touchstart', function(e) {
-                        // 阻止默认行为以防止hover效果
+                    // 移除所有现有事件（防止重复绑定）
+                    const buttonClone = button.cloneNode(true);
+                    button.parentNode.replaceChild(buttonClone, button);
+                    
+                    // 对克隆后的按钮添加事件
+                    buttonClone.addEventListener('click', function(e) {
                         e.preventDefault();
+                        e.stopPropagation();
                         
-                        // 移除同组其他按钮的 active 类
-                        buttons.forEach(btn => {
-                            btn.classList.remove('active');
-                        });
+                        // 确保清除所有按钮的active状态
+                        buttons.forEach(btn => btn.classList.remove('active'));
                         
-                        // 为当前点击的按钮添加 active 类
+                        // 手动添加active类
                         this.classList.add('active');
                         
+                        // 更新过滤器
                         const filterType = group.getAttribute('data-filter');
                         const filterValue = this.getAttribute('data-value');
-                        // 更新筛选条件
                         filters[filterType] = filterValue;
                         
-                        // 更新路线显示
-                        updateRoutes();
+                        // 立即更新路线
+                        setTimeout(() => updateRoutes(), 0);
+                        
+                        return false;
                     });
                 });
             }
-            
-            // 保留原有的点击事件处理
-            group.addEventListener('click', event => {
-                if (event.target.tagName === 'BUTTON') {
-                    // 移除同组其他按钮的 active 类
-                    group.querySelectorAll('button').forEach(btn => {
-                        btn.classList.remove('active');
+            // 触摸设备通用处理
+            else if (isTouchDevice) {
+                buttons.forEach(button => {
+                    ['touchstart', 'touchend', 'click'].forEach(eventName => {
+                        button.addEventListener(eventName, function(e) {
+                            if (eventName === 'touchstart') {
+                                e.preventDefault();
+                            }
+                            
+                            // 只在click或touchend事件时更改状态
+                            if (eventName === 'click' || eventName === 'touchend') {
+                                // 移除同组其他按钮的 active 类
+                                buttons.forEach(btn => {
+                                    btn.classList.remove('active');
+                                });
+                                
+                                // 为当前点击的按钮添加 active 类
+                                this.classList.add('active');
+                                
+                                const filterType = group.getAttribute('data-filter');
+                                const filterValue = this.getAttribute('data-value');
+                                // 更新筛选条件
+                                filters[filterType] = filterValue;
+                                
+                                // 更新路线显示
+                                updateRoutes();
+                            }
+                        }, {passive: false});
                     });
-                    // 为当前点击的按钮添加 active 类
-                    event.target.classList.add('active');
-                    const filterType = group.getAttribute('data-filter');
-                    const filterValue = event.target.getAttribute('data-value');
-                    // 更新筛选条件
-                    filters[filterType] = filterValue;
-                    console.log('Filters:', filters);
-                    // 更新路线显示
-                    updateRoutes();
-                }
-            });
+                });
+            }
+            // 桌面设备处理（保留原有逻辑）
+            else {
+                group.addEventListener('click', event => {
+                    if (event.target.tagName === 'BUTTON') {
+                        // 移除同组其他按钮的 active 类
+                        group.querySelectorAll('button').forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                        // 为当前点击的按钮添加 active 类
+                        event.target.classList.add('active');
+                        const filterType = group.getAttribute('data-filter');
+                        const filterValue = event.target.getAttribute('data-value');
+                        // 更新筛选条件
+                        filters[filterType] = filterValue;
+                        console.log('Filters:', filters);
+                        // 更新路线显示
+                        updateRoutes();
+                    }
+                });
+            }
         });
 
-        // 初始显示所有路线（如果需要）
+        // 初始显示所有路线
         updateRoutes();
     } catch (error) {
         console.error('初始化失败:', error);
