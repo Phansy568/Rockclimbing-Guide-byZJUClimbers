@@ -59,7 +59,7 @@ const courses = [
     {
         title: '难度攀岩-保护',
         image: course2Image,
-        link: 'https://bqq5gg6kt7d.feishu.cn/drive/folder/VphRf3HhLlyWzydoCXTcwb5TneE?from=from_copylink',
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
         description: '五步保护法、装备介绍、进阶保护技术'
     },
     {
