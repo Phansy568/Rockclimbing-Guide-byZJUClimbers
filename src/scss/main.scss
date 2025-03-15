@@ -170,8 +170,54 @@ h1, h2, h3 {
   }
 
   .hero {
+    height: auto;  // 改为自适应高度
+    min-height: 100vh; // 至少保持一屏高度
+    padding: 80px 0 40px;  // 增加底部内边距确保不会紧贴下一区域
+
+    .hero-content {
+      padding: 1.5rem;
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+    }
+
     .intro-cards {
       grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem; // 添加底部间距
+
+      .card {
+        padding: 1.5rem;
+        
+        // 特别处理第三个卡片（荣誉卡片）
+        &:last-child {
+          max-height: 350px;  // 限制最大高度
+          overflow-y: auto;   // 允许垂直滚动
+          
+          p {
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+          }
+        }
+
+        i {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        h3 {
+          font-size: 1.3rem;
+          margin-bottom: 0.8rem;
+        }
+      }
     }
   }
 }
