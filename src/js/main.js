@@ -27,32 +27,46 @@ mobileMenuBtn.addEventListener('click', () => {
 // 课程数据
 const courses = [
     {
-        title: '先锋保护技术',
+        title: '攀岩简介',
         image: course1Image,
-        progress: 75,
-        link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
-        description: '学习先锋攀岩的保护技术和安全要领'
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/IkwLdYK4Eofx8wxqrMfcEiWSnCc',
+        description: '发展历程、各方面概述'
     },
     {
-        title: '绳结打结技巧',
+        title: '攀岩装备',
         image: course2Image,
-        progress: 60,
-        link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef',
-        description: '掌握各种攀岩常用绳结的打法'
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/KODQdq6VWoU5PMxyzjpcxfCqnBb',
+        description: '攀岩鞋、镁粉、安全带、主锁、保护器'
     },
     {
-        title: '攀岩动作要领',
-        image: course1Image, // 暂时复用course1.jpg
-        progress: 45,
-        link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
-        description: '学习基础攀岩动作和技巧要领'
+        title: '攀岩技术',
+        image: course1Image,
+        link: 'https://bqq5gg6kt7d.feishu.cn/mindnotes/TVDdbrLO9mkrzqnrbjEcrmTpnAd',
+        description: '姿势、手法、脚法、对抗、平衡'
     },
     {
-        title: '攀岩安全规范',
-        image: course2Image, // 暂时复用course2.jpg
-        progress: 90,
-        link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef',
-        description: '了解攀岩安全规范和注意事项'
+        title: '难度攀岩-保护',
+        image: course2Image,
+        link: 'https://bqq5gg6kt7d.feishu.cn/drive/folder/VphRf3HhLlyWzydoCXTcwb5TneE?from=from_copylink',
+        description: '五步保护法、装备介绍、进阶保护技术'
+    },
+    {
+        title: '难度攀岩-绳结',
+        image: course1Image,
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef?from=from_copylink',
+        description: '8字结、绳尾结、盘绳等'
+    },
+    {
+        title: '难度攀岩-先锋攀爬',
+        image: course2Image,
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/VKrXdQQaQoz9ObxLmvNcVljjned',
+        description: '入挂手法、攀爬和保护等'
+    },
+    {
+        title: '攀石-下落',
+        image: course1Image,
+        link: 'https://bqq5gg6kt7d.feishu.cn/docx/APLQdfmXpoMbxYxg1lycXR1TnnF',
+        description: '基础下落姿势、错误姿势说明等'
     }
 ];
 

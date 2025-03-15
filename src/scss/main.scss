@@ -95,12 +95,13 @@ h1, h2, h3 {
 // 英雄区域样式
 .hero {
   height: 100vh;
+  padding-top: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url('../assets/images/hero-bg.svg');
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('../assets/images/climbing-bg.jpeg');
   background-size: cover;
   background-position: center;
   color: $rope-white;
@@ -122,7 +123,7 @@ h1, h2, h3 {
 
   .intro-cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr 2fr;
     gap: 2rem;
     margin-top: 3rem;
 
