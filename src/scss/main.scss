@@ -200,7 +200,7 @@ h1, h2, h3 {
         // 特别处理第三个卡片（荣誉卡片）
         &:last-child {
           max-height: 350px;  // 限制最大高度
-          overflow-y: auto;   // 允许垂直滚动
+          //overflow-y: auto;   // 允许垂直滚动
           
           p {
             margin-bottom: 0.3rem;
