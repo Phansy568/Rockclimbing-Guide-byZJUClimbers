@@ -98,24 +98,24 @@ courses.forEach(course => {
     courseGrid.appendChild(card);
 });
 
-document.addEventListener('DOMContentLoaded', async() => {
+document.addEventListener('DOMContentLoaded', async () => {
     try {
         // 加载路线数据（如果需要）
         routes = await loadRoutes();
 
         // 设置初始筛选按钮状态
         const filterGroups = document.querySelectorAll('.filter-options');
-        
+
         // 检测是否为触摸设备
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
+
         // 检测是否为微信内置浏览器
         const isWechat = /MicroMessenger/i.test(navigator.userAgent);
-        
+
         // 为每个按钮添加点击和触摸事件监听器
         filterGroups.forEach(group => {
             const buttons = group.querySelectorAll('button');
-            
+
             // 微信浏览器特殊处理
             if (isWechat) {
                 console.log("检测到微信浏览器，使用特殊处理");
@@ -123,33 +123,33 @@ document.addEventListener('DOMContentLoaded', async() => {
                     // 移除所有现有事件（防止重复绑定）
                     const buttonClone = button.cloneNode(true);
                     button.parentNode.replaceChild(buttonClone, button);
-                    
+
                     // 对克隆后的按钮添加事件
-                    buttonClone.addEventListener('click', function(e) {
+                    buttonClone.addEventListener('click', function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        
+
                         console.log("微信浏览器按钮点击:", this.textContent);
-                        
+
                         // 获取当前组的最新按钮集合
                         const currentGroupButtons = Array.from(group.querySelectorAll('button'));
-                        
+
                         // 确保清除当前组内所有按钮的active状态
                         currentGroupButtons.forEach(btn => {
                             btn.classList.remove('active');
                         });
-                        
+
                         // 手动添加active类
                         this.classList.add('active');
-                        
+
                         // 更新过滤器
                         const filterType = group.getAttribute('data-filter');
                         const filterValue = this.getAttribute('data-value');
                         filters[filterType] = filterValue;
-                        
+
                         // 立即更新路线
                         setTimeout(() => updateRoutes(), 0);
-                        
+
                         return false;
                     });
                 });
@@ -158,30 +158,30 @@ document.addEventListener('DOMContentLoaded', async() => {
             else if (isTouchDevice) {
                 buttons.forEach(button => {
                     ['touchstart', 'touchend', 'click'].forEach(eventName => {
-                        button.addEventListener(eventName, function(e) {
+                        button.addEventListener(eventName, function (e) {
                             if (eventName === 'touchstart') {
                                 e.preventDefault();
                             }
-                            
+
                             // 只在click或touchend事件时更改状态
                             if (eventName === 'click' || eventName === 'touchend') {
                                 // 移除同组其他按钮的 active 类
                                 buttons.forEach(btn => {
                                     btn.classList.remove('active');
                                 });
-                                
+
                                 // 为当前点击的按钮添加 active 类
                                 this.classList.add('active');
-                                
+
                                 const filterType = group.getAttribute('data-filter');
                                 const filterValue = this.getAttribute('data-value');
                                 // 更新筛选条件
                                 filters[filterType] = filterValue;
-                                
+
                                 // 更新路线显示
                                 updateRoutes();
                             }
-                        }, {passive: false});
+                        }, { passive: false });
                     });
                 });
             }
@@ -230,16 +230,16 @@ const accordionItems = document.querySelectorAll('.accordion-item');
 accordionItems.forEach(item => {
     const title = item.querySelector('h3');
     const content = item.querySelector('.content');
-    
+
     title.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
-        
+
         // 关闭所有项
         accordionItems.forEach(i => {
             i.classList.remove('open');
             i.querySelector('.content').style.maxHeight = null;
         });
-        
+
         // 如果点击的项是关闭的，则打开它
         if (!isOpen) {
             item.classList.add('open');
@@ -265,48 +265,7 @@ fileInput.addEventListener('change', (e) => {
         console.log('Selected file:', file.name);
     }
 });
-/*
-// GPX文件下载
-const downloadBtn = document.querySelector('.download-btn');
-downloadBtn.addEventListener('click', () => {
-    // 生成GPX文件内容
-    const gpxContent = `<?xml version="1.0" encoding="UTF-8"?>
-        <gpx version="1.1">
-            <trk>
-                <name>攀岩路线示例</name>
-                <trkseg>
-                    <!-- 路线坐标点 -->
-                </trkseg>
-            </trk>
-        </gpx>`;
-    
-    const blob = new Blob([gpxContent], { type: 'application/gpx+xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'climbing-route.gpx';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
 
-// 解析视频文件名获取路线信息
-function parseVideoFilename(filename) {
-    // 假设文件名格式为：wall_position_color_difficulty.mp4
-    // 例如：boulder_left_red_V2.mp4
-    const parts = filename.replace('.MP4', '').split('_');
-    if (parts.length >= 4) {
-        return {
-            wall: parts[0],
-            position: parts[1],
-            color: parts[2],
-            difficulty: parts[3]
-        };
-    }
-    return null;
-}
-*/
 // 更新路线数据
 // 从CSV文件加载路线数据
 async function loadRoutes() {
@@ -320,7 +279,7 @@ async function loadRoutes() {
         return lines.map(line => {
             const [title, bv, tags] = line.split(',');
             const tagArray = tags.split(';');
-            
+
             return {
                 title: title,
                 bvid: bv,
@@ -346,24 +305,12 @@ function updateRoutes() {
         const wallMatch = filters.wall === 'all' || route.wall === filters.wall;
         const positionMatch = filters.position === 'all' || route.position === filters.position;
         const colorMatch = filters.color === 'all' || route.color === filters.color;
-        
+
         return wallMatch && positionMatch && colorMatch;
     });
 
     console.log('Filtered routes:', filteredRoutes);
-/*
-    // 计算分页
-    const totalPages = Math.ceil(filteredRoutes.length / itemsPerPage);
-    const start = currentPage * itemsPerPage;
-    const end = start + itemsPerPage;
-    const pageRoutes = filteredRoutes.slice(start, end);
 
-    // 更新导航按钮状态
-    const prevButton = document.querySelector('.nav-button.prev');
-    const nextButton = document.querySelector('.nav-button.next');
-    prevButton.disabled = currentPage === 0;
-    nextButton.disabled = currentPage >= totalPages - 1;
-*/
     // 生成视频项
     const container = document.querySelector('.video-container');
     if (filteredRoutes.length === 0) {
@@ -374,6 +321,52 @@ function updateRoutes() {
     filteredRoutes.forEach(route => {
         const card = document.createElement('div');
         card.className = 'video-item';
+
+        // 添加标签中英文对照表
+        const tagTranslations = {
+            // 墙面类型
+            wall: {
+                all: '全部',
+                boulder: '攀石',
+                lead: '难度',
+                traverse: '横移'
+            },
+            // 位置
+            position: {
+                all: '全部',
+                left: '左侧',
+                center: '中间',
+                right: '右侧'
+            },
+            // 颜色
+            color: {
+                all: '全部',
+                red: '红色',
+                orange: '橙色',
+                yellow: '黄色',
+                blue: '蓝色',
+                green: '绿色',
+                purple: '紫色',
+                pink: '粉色',
+                brown: '棕色',
+                black: '黑色',
+                gray: '灰色',
+                white: '白色',
+                mixed: '混合'
+            }
+        };
+        // 将英文标签转换为中文显示
+        const wallType = tagTranslations.wall[route.wall] || route.wall;
+        const position = tagTranslations.position[route.position] || route.position;
+        const color = tagTranslations.color[route.color] || route.color;
+
+        // 构建标签描述
+        let tags = [];
+        if (route.wall) tags.push(wallType);
+        if (route.position) tags.push(position);
+        if (route.color) tags.push(color);
+        const tagDescription = tags.length > 0 ? `标签：${tags.join('、')}` : '';
+
         card.innerHTML = `
             <iframe src="https://player.bilibili.com/player.html?bvid=${route.bvid}&page=1&autoplay=0" 
                     scrolling="no" 
@@ -384,85 +377,14 @@ function updateRoutes() {
             </iframe>
             <div class="route-info">
                 <h4>${route.title}</h4>
-                <p class="difficulty">难度：${route.difficulty}</p>
-                <p class="color">颜色：${route.color}</p>   
-                <p class="description">${route.description}</p>
+                <p class="difficulty">难度：${route.difficulty || '未标记'}</p>
+                <p class="color">颜色：${color}</p>   
+                <p class="description">${tagDescription}</p>
             </div>
-            
         `;
-        container.appendChild(card);})
-    /*
-    container.innerHTML = pageRoutes.map(route => `
-        <div class="video-item">
-            <iframe src="https://player.bilibili.com/player.html?bvid=${route.bvid}&page=1" 
-                    scrolling="no" 
-                    border="0" 
-                    frameborder="no" 
-                    framespacing="0" 
-                    allowfullscreen="true">
-            </iframe>
-            <div class="route-info">
-                <h4>${route.title}</h4>
-                <p class="difficulty">难度：${route.difficulty}</p>
-                <p class="color">颜色：${route.color}</p>
-                <p class="description">${route.description}</p>
-            </div>
-        </div>
-    `).join('');
-    */
-}
-
-/*
-// 初始化筛选器和显示
-document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        // 加载路线数据
-        routes = await loadRoutes();
-        
-        // 设置初始筛选按钮状态
-        const filterGroups = document.querySelectorAll('.filter-options');
-        filterGroups.forEach(group => {
-            const filterType = group.dataset.filter;
-            const allButton = group.querySelector('button[data-value="all"]');
-            if (allButton) {
-                allButton.classList.add('active');
-            }
-        });
-
-        // 初始显示所有路线
-        updateRoutes();
-    } catch (error) {
-        console.error('初始化失败:', error);
-    }
-});
-*/
-/*
-// 筛选按钮点击事件处理
-const filterButtons = document.querySelectorAll('.filter-options button');
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const filterGroup = button.parentElement;
-        const filterType = filterGroup.dataset.filter;
-        
-        // 移除同组中所有按钮的active类
-        filterGroup.querySelectorAll('button').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // 为当前点击的按钮添加active类
-        button.classList.add('active');
-        
-        // 更新筛选条件
-        filters[filterType] = button.dataset.value === 'all' ? null : button.dataset.value;
-        
-        // 重置页码并更新显示
-        currentPage = 0;
-        updateRoutes();
+        container.appendChild(card);
     });
-});
-*/
-
-
+}
 
 // 导航按钮事件处理
 document.querySelector('.nav-button.prev').addEventListener('click', () => {
