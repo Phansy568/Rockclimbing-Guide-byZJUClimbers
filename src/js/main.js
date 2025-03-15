@@ -314,7 +314,8 @@ async function loadRoutes() {
         //const response = await fetch('/src/video_list.csv');
         //const csvText = await response.text();
         //const lines = csvText.split('\n').slice(1); // 跳过标题行
-        const lines = ['新型的攀石赛模式！完成线路才能晋级下一轮比拼，竞争相对激烈！,BV1vhw9euEnX,boulder;center;red'    
+        const lines = ['好一个棋局，让我CPU燃烧,BV1N8Q3YCExw,lead;center;mixed',
+            '全程绷紧神经的感觉谁懂啊，爽,BV1FkQ3YvENi,traverse;all;all'
         ]
         return lines.map(line => {
             const [title, bv, tags] = line.split(',');
