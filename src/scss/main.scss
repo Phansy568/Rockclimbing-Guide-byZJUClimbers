@@ -189,18 +189,19 @@ h1, h2, h3 {
   margin: 3rem 0;
 }
 
+// 添加统一的部分标题样式
+.courses h2, .routes h2, .contact h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $rock-gray;
+  margin-bottom: 3rem;
+}
+
 // 课程模块样式
 .courses {
   padding: 4rem 2rem;
   background-color: $rope-white;
-
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: $rock-gray;
-    margin-bottom: 3rem;
-  }
 
   .course-grid {
     display: grid;
@@ -271,7 +272,7 @@ h1, h2, h3 {
 .routes {
   padding: 4rem 2rem;
   background-color: white;
-
+  
   .filter-container {
     max-width: 1200px;
     margin: 0 auto 2rem;
@@ -368,9 +369,12 @@ h1, h2, h3 {
 
     .video-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      width: 100%;
+      grid-template-columns: repeat(3, minmax(250px, 1fr)); /* 固定三列 */
+      gap: 4rem;
+      width: 90%;
+      min-height: 400px; /* 防止拉伸 */
+      justify-items: center; /* 确保所有项目都在格子中居中 */
+      margin: 0 auto;
     }
 
     .no-results {
@@ -378,7 +382,7 @@ h1, h2, h3 {
       text-align: center;
       padding: 3rem;
       font-size: 1.2rem;
-      color: lighten($rock-gray, 20%);
+      color: color.adjust($rock-gray, $lightness: 20%);
     }
 
     .nav-button {
@@ -417,18 +421,37 @@ h1, h2, h3 {
   }
 } 
 
+@media (max-width: $breakpoint-mobile) {
+  .routes {
+    .video-grid {
+      .video-container {
+        display: grid;
+        grid-template-columns: 1fr; /* 移动端改为单列布局 */
+        width: 100%;
+        gap: 2rem;
+      }
+      
+      .no-results {
+        grid-column: 1;
+        width: 100%;
+        text-align: center;
+        padding: 1.5rem;
+      }
+    }
+  }
+}
+
+// 平板设备的响应式布局
+@media (min-width: $breakpoint-mobile) and (max-width: $breakpoint-tablet) {
+  .routes .video-grid .video-container {
+    grid-template-columns: repeat(2, 1fr); /* 平板设备使用两列布局 */
+  }
+}
+
 // 联系我们样式
 .contact {
   padding: 4rem 2rem;
   background-color: $rope-white;
-
-  h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: $rock-gray;
-    margin-bottom: 3rem;
-  }
 
   .contact-content {
     max-width: 800px;
@@ -609,7 +632,8 @@ h1, h2, h3 {
 .video-item {
   iframe {
     width: 100%;
-    height: 200px;
+    height: 500px;
+    aspect-ratio: 9 / 18;
     border-radius: 10px;
   }
 }
@@ -650,3 +674,79 @@ h1, h2, h3 {
     }
   }
 }
+
+@media (hover: none) {
+  .button:hover {
+    pointer-events: none;
+  }
+  
+  // 修复移动端筛选按钮悬浮态问题
+  .filter-options button {
+    // 禁用所有悬浮效果
+    &:hover {
+      background: inherit;
+      color: inherit;
+      border-color: inherit;
+    }
+    
+    // 确保点击时立即应用选中样式
+    &:active {
+      background: $safety-orange;
+      color: white;
+      border-color: $safety-orange;
+    }
+    
+    // 保持选中状态的样式
+    &.active {
+      background: $safety-orange !important;
+      color: white !important;
+      border-color: $safety-orange !important;
+    }
+    
+    // 处理颜色按钮特殊情况
+    &.color-btn {
+      &:hover .color-dot {
+        border-color: inherit;
+      }
+      
+      &:active .color-dot,
+      &.active .color-dot {
+        border-color: white;
+      }
+    }
+  }
+  
+  // 强制移除所有触摸设备上的悬停效果
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}
+
+// 微信浏览器专用样式
+@supports (-webkit-overflow-scrolling: touch) {
+  .filter-options button {
+    // 硬重置所有状态，避免微信浏览器的默认行为
+    transition: none !important;
+    
+    &:hover, &:focus {
+      background-color: white !important;
+      color: $rock-gray !important;
+      border-color: $rock-gray !important;
+    }
+    
+    &.active {
+      background-color: $safety-orange !important;
+      color: white !important;
+      border-color: $safety-orange !important;
+      
+      &:hover, &:focus {
+        background-color: $safety-orange !important;
+        color: white !important;
+        border-color: $safety-orange !important;
+      }
+    }
+  }
+}
+
