@@ -343,7 +343,7 @@ function updateRoutes() {
 
         // 添加标签中英文对照表
         const tagTranslations = {
-            // 墙面类型
+            // 类型
             wall: {
                 all: '全部',
                 boulder: '攀石',
