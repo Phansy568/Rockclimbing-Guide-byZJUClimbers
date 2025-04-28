@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // 需要安装这个插件
 
 module.exports = {
   entry: './src/js/main.js',
@@ -60,5 +61,11 @@ module.exports = {
       filename: 'index.html',       // 输出文件名
       inject: 'body',               // 将脚本注入到 body 底部
     }),
+    // 添加复制插件，将数据文件复制到构建目录
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/data', to: 'src/data' }
+      ]
+    })
   ],
-}; 
+};

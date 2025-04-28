@@ -267,32 +267,51 @@ fileInput.addEventListener('change', (e) => {
 });
 
 // 更新路线数据
-// 从CSV文件加载路线数据
+// 从JSON文件加载路线数据
 async function loadRoutes() {
     try {
-        //const response = await fetch('/src/video_list.csv');
-        //const csvText = await response.text();
-        //const lines = csvText.split('\n').slice(1); // 跳过标题行
-        const lines = ['好一个棋局，让我CPU燃烧,BV1N8Q3YCExw,lead;center;mixed',
-            '全程绷紧神经的感觉谁懂啊，爽,BV1FkQ3YvENi,traverse;all;all'
-        ]
-        return lines.map(line => {
-            const [title, bv, tags] = line.split(',');
-            const tagArray = tags.split(';');
-
+        const response = await fetch('/src/data/routes.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const routesData = await response.json();
+        
+        return routesData.map(route => {
             return {
-                title: title,
-                bvid: bv,
-                wall: tagArray[0], // 默认值
-                position: tagArray[1] || '', // 中间
-                color: tagArray[2] || '', // 灰色
-                difficulty: '', // 暂无难度信息
-                description: `标签：${tagArray.join('、')}`
+                title: route.title,
+                bvid: route.bvid,
+                wall: route.tags[0] || '', // 墙面类型
+                position: route.tags[1] || '', // 位置
+                color: route.tags[2] || '', // 颜色
+                difficulty: route.difficulty || '', // 难度（如果有）
+                description: `标签：${route.tags.join('、')}`
             };
         }).filter(route => route.title && route.bvid); // 过滤掉无效数据
     } catch (error) {
         console.error('加载视频数据失败:', error);
-        return [];
+        // 如果加载失败，使用备用数据（可选）
+        console.log('使用备用数据');
+        const backupData = [
+            {
+                title: "好一个棋局，让我CPU燃烧",
+                bvid: "BV1N8Q3YCExw",
+                wall: "lead",
+                position: "center",
+                color: "mixed",
+                difficulty: "",
+                description: "标签：lead、center、mixed"
+            },
+            {
+                title: "全程绷紧神经的感觉谁懂啊，爽",
+                bvid: "BV1FkQ3YvENi",
+                wall: "traverse",
+                position: "all",
+                color: "all",
+                difficulty: "",
+                description: "标签：traverse、all、all"
+            }
+        ];
+        return backupData;
     }
 }
 
