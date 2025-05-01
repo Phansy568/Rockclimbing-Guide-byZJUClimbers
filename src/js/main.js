@@ -2,8 +2,13 @@
 import '../scss/main.scss';
 
 // 导入图片
-import course1Image from '../assets/images/course1.jpg';
-import course2Image from '../assets/images/course2.jpg';
+import 攀岩简介Image from '../assets/images/攀岩简介.png';
+import 攀岩装备Image from '../assets/images/攀岩装备.png';
+import 攀岩技术Image from '../assets/images/攀岩技术.png';
+import 难度攀岩保护Image from '../assets/images/难度攀岩-保护.png';
+import 攀岩绳结Image from '../assets/images/攀岩绳结.png';
+import 难度攀岩先锋Image from '../assets/images/难度攀岩-先锋.jpeg';
+import 攀石下落Image from '../assets/images/攀石-下落.png';
 
 // 路线数据
 let routes = [];
@@ -40,43 +45,43 @@ mobileMenuBtn.addEventListener('click', () => {
 const courses = [
     {
         title: '攀岩简介',
-        image: course1Image,
+        image: 攀岩简介Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/IkwLdYK4Eofx8wxqrMfcEiWSnCc',
         description: '发展历程、各方面概述'
     },
     {
         title: '攀岩装备',
-        image: course2Image,
+        image: 攀岩装备Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/KODQdq6VWoU5PMxyzjpcxfCqnBb',
         description: '攀岩鞋、镁粉、安全带、主锁、保护器'
     },
     {
         title: '攀岩技术',
-        image: course1Image,
+        image: 攀岩技术Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/mindnotes/TVDdbrLO9mkrzqnrbjEcrmTpnAd',
         description: '姿势、手法、脚法、对抗、平衡'
     },
     {
         title: '难度攀岩-保护',
-        image: course2Image,
+        image: 难度攀岩保护Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/PRpxdiKhZo69LGxJJJGcYViqndg',
-        description: '五步保护法、装备介绍、进阶保护技术'
+        description: '五步保护法、保护器介绍、进阶保护技术'
     },
     {
         title: '难度攀岩-绳结',
-        image: course1Image,
+        image: 攀岩绳结Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/R4vudOmO0oMHi5xZaT8cslNcnef?from=from_copylink',
         description: '8字结、绳尾结、盘绳等'
     },
     {
-        title: '难度攀岩-先锋攀爬',
-        image: course2Image,
+        title: '难度攀岩-先锋',
+        image: 难度攀岩先锋Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/VKrXdQQaQoz9ObxLmvNcVljjned',
         description: '入挂手法、攀爬和保护等'
     },
     {
         title: '攀石-下落',
-        image: course1Image,
+        image: 攀石下落Image,
         link: 'https://bqq5gg6kt7d.feishu.cn/docx/APLQdfmXpoMbxYxg1lycXR1TnnF',
         description: '基础下落姿势、错误姿势说明等'
     }
@@ -88,7 +93,7 @@ courses.forEach(course => {
     const card = document.createElement('div');
     card.className = 'course-card';
     card.innerHTML = `
-        <div class="course-image" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
+        <div class="course-image">
             <img src="${course.image}" alt="${course.title}">
         </div>
         <h3>${course.title}</h3>
