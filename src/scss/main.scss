@@ -247,7 +247,20 @@ h1, h2, h3 {
 // 课程模块样式
 .courses {
   padding: 4rem 2rem;
-  background-color: $rope-white;
+  background-color: white;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-top: 4rem;
+    background: linear-gradient(to right,
+      transparent,
+      $safety-orange,
+      transparent
+    );
+  }
 
   .course-grid {
     display: grid;
@@ -319,6 +332,7 @@ h1, h2, h3 {
 .routes {
   padding: 4rem 2rem;
   background-color: white;
+  position: relative;
   
   .filter-container {
     max-width: 1200px;
@@ -496,6 +510,74 @@ h1, h2, h3 {
 }
 
 // 联系我们样式
+.shoes {
+  padding: 4rem 2rem;
+  background-color: white;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, $safety-orange, transparent);
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: $rock-gray;
+    margin-bottom: 3rem;
+  }
+
+  .shoes-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    
+    .shoes-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      padding: 2rem;
+      text-align: center;
+
+      h3 {
+        font-family: 'Noto Sans SC', sans-serif;
+        font-size: 1.3rem;
+        color: $rock-gray;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: color.adjust($rock-gray, $lightness: 15%);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .shoes-btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background: $safety-orange;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background: color.adjust($safety-orange, $lightness: -10%);
+        }
+      }
+    }
+  }
+}
+
 .contact {
   padding: 4rem 2rem;
   background-color: $rope-white;
