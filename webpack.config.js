@@ -69,7 +69,8 @@ module.exports = {
     // 添加复制插件，将数据文件复制到构建目录
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/data', to: 'src/data' }
+        { from: 'src/data', to: 'src/data' },
+        { from:'src/assets', to:'src/assets'}
       ]
     })
   ],
