@@ -27,19 +27,22 @@ const nav = document.querySelector('.main-nav');
 const mobileMenuBtn = document.querySelector('.mobile-menu');
 const navLinks = document.querySelector('.nav-links');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        nav.style.backgroundColor = 'rgba(74, 74, 74, 0.95)';
-    } else {
-        nav.style.backgroundColor = '#4a4a4a';
-    }
-});
+if (nav) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            nav.style.backgroundColor = 'rgba(74, 74, 74, 0.95)';
+        } else {
+            nav.style.backgroundColor = '#4a4a4a';
+        }
+    });
+}
 
-// 移动端菜单
-mobileMenuBtn.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    mobileMenuBtn.classList.toggle('active');
-});
+if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        mobileMenuBtn.classList.toggle('active');
+    });
+}
 
 // 课程数据
 const courses = [
@@ -89,19 +92,21 @@ const courses = [
 
 // 生成课程卡片
 const courseGrid = document.querySelector('.course-grid');
-courses.forEach(course => {
-    const card = document.createElement('div');
-    card.className = 'course-card';
-    card.innerHTML = `
-        <div class="course-image">
-            <img src="${course.image}" alt="${course.title}">
-        </div>
-        <h3>${course.title}</h3>
-        <p class="description">${course.description}</p>
-        <a href="${course.link}" target="_blank" class="learn-btn">立即学习</a>
-    `;
-    courseGrid.appendChild(card);
-});
+if (courseGrid) {
+    courses.forEach(course => {
+        const card = document.createElement('div');
+        card.className = 'course-card';
+        card.innerHTML = `
+            <div class="course-image">
+                <img src="${course.image}" alt="${course.title}">
+            </div>
+            <h3>${course.title}</h3>
+            <p class="description">${course.description}</p>
+            <a href="${course.link}" target="_blank" class="learn-btn">立即学习</a>
+        `;
+        courseGrid.appendChild(card);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -422,6 +427,3 @@ document.querySelector('.nav-button.next').addEventListener('click', () => {
     currentPage++;
     updateVideoDisplay();
 });
-
-// 初始化显示
-updateVideoDisplay();

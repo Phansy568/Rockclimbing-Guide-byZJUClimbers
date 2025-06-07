@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安全知识自测 - 浙大攀岩队</title>
+    <link rel="stylesheet" href="dist/styles.css">
+    <!-- 字体加载 -->
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .assessment-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .assessment-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .section-title {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 30px 0 20px 0;
+            border-left: 4px solid #3498db;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .question-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .question-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .question-content {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+        .options {
+            margin: 15px 0;
+        }
+        .option {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1976d2;
+        }
+        .option.correct {
+            background: #e8f5e8;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        .option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        .answer-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        .answer-btn:hover {
+            background: #2980b9;
+        }
+        .answer-btn.show-answer {
+            background: #27ae60;
+        }
+        .answer-content {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            border-radius: 0 5px 5px 0;
+            display: none;
+        }
+        .answer-content.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #95a5a6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #7f8c8d;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #ecf0f1;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .score-display {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .checkbox-option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        .checkbox-option.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1976d2;
+        }
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 10px;
+            pointer-events: none;
+        }
+        .true-false {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .tf-option {
+            padding: 10px 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        .tf-option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        .tf-option.selected {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            color: #1976d2;
+        }
+        .sticky-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .sticky-button:hover {
+            background: #2980b9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="assessment-container">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+        
+        <div class="assessment-header">
+            <h1><i class="fas fa-clipboard-check"></i> 顶绳保护与抱石下落习题</h1>
+            <p>攀岩安全知识综合测试</p>
+        </div>
+        
+        <button id="toggleAllAnswers" class="sticky-button">显示全部答案</button>
+          
+        <!-- 单选题部分 -->
+        <div class="section-title">一、单选题</div>
+        
+        <div class="question-card">
+            <h3 class="question-title">1. 攀岩用的绳子是</h3>
+            <div class="options">
+                <div class="option" data-value="A">A. 静力绳</div>
+                <div class="option" data-value="B">B. 动力绳</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer1')">显示答案</button>
+            <div id="answer1" class="answer-content">
+                <p><strong>正确答案：B</strong></p>
+                <p><strong>解析：</strong>攀岩使用动力绳，具有一定的弹性，能够吸收坠落时的冲击力，保护攀爬者安全。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">2. 保护者站位的最佳选择是</h3>
+            <div class="options">
+                <div class="option" data-value="A">A. 攀爬者正后方</div>
+                <div class="option" data-value="B">B. 攀爬者斜后方</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer2')">显示答案</button>
+            <div id="answer2" class="answer-content">
+                <p><strong>正确答案：B</strong></p>
+                <p><strong>解析：</strong>保护者应站在攀爬者斜后方，这样既能观察攀爬者动作，又能避免坠落时被撞到。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">3. 关于连接攀爬者的两个主锁的锁门朝向，正确的是</h3>
+            <div class="options">
+                <div class="option" data-value="A">A. 
+                    <img src="/assets/images/3-A.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+                <div class="option" data-value="B">B. 
+                    <img src="/assets/images/3-B.jpeg" alt="Image" style="max-width:100%;height:auto;">
+
+                </div>
+                <div class="option" data-value="C">C. 
+                    <img src="/assets/images/3-C.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+                <div class="option" data-value="D">D. 
+                    <img src="/assets/images/3-D.png" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer3')">显示答案</button>
+            <div id="answer3" class="answer-content">
+                <p><strong>正确答案：C</strong></p>
+                <p><strong>解析：</strong>锁门在同侧时需先确定锁门朝向相反，然后再转到异侧就会变成相同朝向了，这样二次相反以确保安全。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">4. 攀岩安全带装备环的承重为</h3>
+            <img src="/assets/images/4.jpeg" alt="Image" style="max-width:100%;height:auto;">
+            <div class="options">
+                <div class="option" data-value="A">A. 5kg</div>
+                <div class="option" data-value="B">B. 10kg</div>
+                <div class="option" data-value="C">C. 15kg</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer4')">显示答案</button>
+            <div id="answer4" class="answer-content">
+                <p><strong>正确答案：A</strong></p>
+                <p><strong>解析：</strong>攀岩安全带装备环的承重为5kg，仅用于携带装备，不能承受人体重量。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">5. 抱石下落时身体的正确姿势是</h3>
+            <div class="options">
+                <div class="option" data-value="A">A. 双腿伸直着地</div>
+                <div class="option" data-value="B">B. 下蹲后身体后倾并主动翻滚卸力</div>
+                <div class="option" data-value="C">C. 整个背部同时着地以保护头部</div>
+                <div class="option" data-value="D">D. 腿部夹紧</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer5')">显示答案</button>
+            <div id="answer5" class="answer-content">
+                <p><strong>正确答案：B</strong></p>
+                <p><strong>解析：</strong>正确的下落姿势是下蹲后身体后倾并主动翻滚卸力，这样能最大程度减少受伤风险。</p>
+            </div>
+        </div>
+
+        <!-- 多选题部分 -->
+        <div class="section-title">二、多选题</div>
+        
+        <div class="question-card">
+            <h3 class="question-title">6. 右利手保护者锁门的朝向正确的是</h3>
+            <div class="options">
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="A"> A. 左
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="B"> B. 上
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="C"> C. 右
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="D"> D. 下
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer6')">显示答案</button>
+            <div id="answer6" class="answer-content">
+                <p><strong>正确答案：AD</strong></p>
+                <p><strong>解析：</strong>右利手保护者锁门朝向应为左或下，避免操作五步保护法时被制动手意外开启。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">7. 爬太快时应采取的措施有</h3>
+            <div class="options">
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="A"> A. 增加左手收绳长度和收绳速度
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="B"> B. 向后移动收绳，之后再返回原位
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="C"> C. 和攀爬者沟通让他停一会/爬慢点
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer7')">显示答案</button>
+            <div id="answer7" class="answer-content">
+                <p><strong>正确答案：ABC</strong></p>
+                <p><strong>解析：</strong>当攀爬者爬得太快时，保护者应增加收绳速度、向后移动并与攀爬者沟通。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">8. 攀岩装备可靠的认证有</h3>
+            <div class="options">
+                <div class="option" data-value="A">A. 
+                    <img src="/assets/images/8-A.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+                <div class="option" data-value="B">B. 
+                    <img src="/assets/images/8-B.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+                <div class="option" data-value="C">C. 
+                    <img src="/assets/images/8-C.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+                <div class="option" data-value="D">D. 
+                    <img src="/assets/images/8-D.jpeg" alt="Image" style="max-width:100%;height:auto;">
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer8')">显示答案</button>
+            <div id="answer8" class="answer-content">
+                <p><strong>正确答案：BCD</strong></p>
+                <p><strong>解析：</strong>攀岩装备的可靠认证包括多个国际标准：CE、UIAA、UKCA都可以，此外安全带也常见EN认证，3C认证主要关注电气安全和产品质量管理，可能不涵盖攀岩装备在极限运动中的特定风险和使用条件。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">9. 以下哪些穿戴安全带的注意事项是正确的</h3>
+            <div class="options">
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="A"> A. 腰环提至胯部以上，确保所有衣物收入安全带内
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="B"> B. 腰环松紧度以贴合腰部为宜，不放心的话可以向下拽确保够紧
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="C"> C. 腰带尾端和腿环带调完松紧后余量应保持在2cm及以上
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="D"> D. 腿环松紧度以能插入两指宽度为宜
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer9')">显示答案</button>
+            <div id="answer9" class="answer-content">
+                <p><strong>正确答案：ABD</strong></p>
+                <p><strong>解析：</strong>正确穿戴安全带需要注意腰环位置、松紧度和余量，腰带余量2cm太少，应保证至少能收进小环，以防止意外脱出。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">10. 以下哪些情况可能会导致保护失效？</h3>
+            <div class="options">
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="A"> A. 主锁锁门未完全锁紧
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="B"> B. 未检查八字结和绳尾结
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="C"> C. 保护器未与安全带主环连接
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="D"> D. 保护者走神未注意到绳索未收紧
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer10')">显示答案</button>
+            <div id="answer10" class="answer-content">
+                <p><strong>正确答案：ABCD</strong></p>
+                <p><strong>解析：</strong>所有这些情况都可能导致保护失效，必须严格检查和避免。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">11. 攀爬前的伙伴检查内容包括</h3>
+            <div class="options">
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="A"> A. 两边绳索未缠绕
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="B"> B. 所有主锁处于正确锁闭状态
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="C"> C. 安全带穿戴正确，攀爬者攀岩鞋带绑好
+                </div>
+                <div class="checkbox-option">
+                    <input type="checkbox" data-value="D"> D. 绳索、安全带、主锁三者间没有连接错误
+                </div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer11')">显示答案</button>
+            <div id="answer11" class="answer-content">
+                <p><strong>正确答案：ABCD</strong></p>
+                <p><strong>解析：</strong>攀爬前的伙伴检查应包括所有安全相关的项目，确保万无一失。</p>
+            </div>
+        </div>
+
+        <!-- 判断题部分 -->
+        <div class="section-title">三、判断题</div>
+        
+        <div class="question-card">
+            <h3 class="question-title">12. 顶绳保护时可以穿攀岩鞋保护。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer12')">显示答案</button>
+            <div id="answer12" class="answer-content">
+                <p><strong>正确答案：错误</strong></p>
+                <p><strong>解析：</strong>顶绳保护时不应穿攀岩鞋，应穿平底鞋以确保站立稳定。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">13. 顶绳保护时双手不用始终握紧，中间可以放松一下。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer13')">显示答案</button>
+            <div id="answer13" class="answer-content">
+                <p><strong>正确答案：错误</strong></p>
+                <p><strong>解析：</strong>顶绳保护时制动手必须始终握紧绳索，绝不能放松。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">14. 右利手顶绳保护者的右手应尽量靠近保护器，但不能贴住保护器。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer14')">显示答案</button>
+            <div id="answer14" class="answer-content">
+                <p><strong>正确答案：正确</strong></p>
+                <p><strong>解析：</strong>制动手应靠近保护器但不贴住（防止被卷进保护器），保持适当距离以便操作。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">15. 顶绳保护时双手均以虎口和四指抓握绳子，大拇指可以夹在绳子和四指之间。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer15')">显示答案</button>
+            <div id="answer15" class="answer-content">
+                <p><strong>正确答案：错误</strong></p>
+                <p><strong>解析：</strong>握绳方式应该是四指在一侧，拇指压在四指外侧，这样握绳最紧。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">16. 攀石下落时需要全身肌肉放松。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer16')">显示答案</button>
+            <div id="answer16" class="answer-content">
+                <p><strong>正确答案：错误</strong></p>
+                <p><strong>解析：</strong>攀石下落时肌肉应适度紧张，准备缓冲，而不是完全放松。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">17. 主锁锁门打开时，纵轴受力强度比关闭时减少3~4倍。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer17')">显示答案</button>
+            <div id="answer17" class="answer-content">
+                <p><strong>正确答案：正确</strong></p>
+                <p><strong>解析：</strong>主锁锁门打开时强度大幅降低，因此必须确保锁门锁紧。</p>
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3 class="question-title">18. 主锁可以在横轴方向受力。</h3>
+            <div class="true-false">
+                <div class="tf-option" data-value="true">正确</div>
+                <div class="tf-option" data-value="false">错误</div>
+            </div>
+            <button class="answer-btn" onclick="toggleAnswer('answer18')">显示答案</button>
+            <div id="answer18" class="answer-content">
+                <p><strong>正确答案：错误</strong></p>
+                <p><strong>解析：</strong>主锁只能在纵轴方向受力，横轴受力会导致强度大幅降低，因此必须确保锁门纵轴受力。</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let answeredQuestions = 0;
+        const totalQuestions = 18;
+        
+        // 单选题处理
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const parent = this.closest('.question-card');
+                const options = parent.querySelectorAll('.option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // 多选题处理
+        document.querySelectorAll('.checkbox-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                checkbox.checked = !checkbox.checked;
+                this.classList.toggle('selected', checkbox.checked);
+            });
+        });
+        
+        // 判断题处理
+        document.querySelectorAll('.tf-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const parent = this.closest('.true-false');
+                const options = parent.querySelectorAll('.tf-option');
+                options.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            const button = answer.previousElementSibling;
+            
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                button.textContent = '显示答案';
+                button.classList.remove('show-answer');
+                answeredQuestions--;
+            } else {
+                answer.classList.add('show');
+                button.textContent = '隐藏答案';
+                button.classList.add('show-answer');
+                answeredQuestions++;
+            }
+            
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            // Add null checks for progressFill and scoreDisplay
+            if (progressFill && scoreDisplay) {
+                const percentage = (answeredQuestions / totalQuestions) * 100;
+                progressFill.style.width = percentage + '%';
+                scoreDisplay.textContent = `已完成：${answeredQuestions} / ${totalQuestions} 题`;
+            }
+        }
+
+        // 显示/隐藏全部答案
+        const toggleAllAnswersBtn = document.getElementById('toggleAllAnswers');
+        let allAnswersVisible = false;
+
+        toggleAllAnswersBtn.addEventListener('click', function() {
+            const allAnswerContents = document.querySelectorAll('.answer-content');
+            const allAnswerButtons = document.querySelectorAll('.answer-btn');
+            
+            allAnswersVisible = !allAnswersVisible;
+            
+            allAnswerContents.forEach(answer => {
+                answer.classList.toggle('show', allAnswersVisible);
+            });
+            
+            allAnswerButtons.forEach(button => {
+                button.textContent = allAnswersVisible ? '隐藏答案' : '显示答案';
+                button.classList.toggle('show-answer', allAnswersVisible);
+            });
+            
+            toggleAllAnswersBtn.textContent = allAnswersVisible ? '隐藏全部答案' : '显示全部答案';
+            
+            // 更新答题进度
+            answeredQuestions = allAnswersVisible ? totalQuestions : 0;
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

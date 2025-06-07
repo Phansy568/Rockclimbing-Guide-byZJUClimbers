@@ -61,6 +61,11 @@ module.exports = {
       filename: 'index.html',       // 输出文件名
       inject: 'body',               // 将脚本注入到 body 底部
     }),
+    new HtmlWebpackPlugin({
+      template: './assessment.html', // 模板文件路径
+      filename: 'assessment.html',       // 输出文件名
+      inject: 'body',               // 将脚本注入到 body 底部
+    }),
     // 添加复制插件，将数据文件复制到构建目录
     new CopyWebpackPlugin({
       patterns: [
